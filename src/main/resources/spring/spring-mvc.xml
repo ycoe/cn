@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+
+    <!-- 自动扫描且只扫描@Controller -->
+    <context:component-scan base-package="com.duoec.cn" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+        <mvc:message-converters register-defaults="true">
+            <!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8" />
+            </bean>
+            <!-- 使用fastjson转换 -->
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="features">
+                    <array>
+                        <value>DisableCircularReferenceDetect</value>
+                    </array>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/server.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- REST中根据URL后缀自动判定Content-Type及相应的View -->
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="ignoreAcceptHeader" value="true" />
+        <property name="defaultContentType" value="application/json" />
+        <property name="mediaTypes" >
+            <value>
+                html=text/html
+                json=application/json
+                xml=application/xml
+                text=text/plain
+            </value>
+        </property>
+    </bean>
+
+    <!-- 处理重定向 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="cache" value="true"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+    </bean>
+
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+
+    <!--视图解释器 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass" value="com.duoec.cn.core.view.MultipleViews"/>
+        <property name="viewNames" value="*.ftl"/>
+        <property name="contentType" value="text/html; charset=utf-8"/>
+        <property name="cache" value="true" />
+        <property name="prefix" value="" />
+        <property name="suffix" value="" />
+        <property name="order" value="1"/>
+        <property name="exposeRequestAttributes" value="true" />
+        <property name="exposeSessionAttributes" value="true" />
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="requestContextAttribute" value="request" />
+    </bean>
+
+    <!-- Freemarker配置 -->
+    <bean id="freemarkerConfig" class="com.duoec.cn.core.freemarker.XFreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/views/" />
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">0</prop>
+                <prop key="default_encoding">UTF-8</prop>
+                <prop key="number_format">0.##########</prop>
+                <prop key="datetime_format">yyyy年MM月dd日</prop>
+                <prop key="classic_compatible">true</prop>
+                <prop key="template_exception_handler">rethrow</prop>
+            </props>
+        </property>
+
+        <property name="packages">
+            <list>
+                <value>com.duoec.cn.**</value>
+            </list>
+        </property>
+    </bean>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/manager/**"/>
+            <bean class="com.duoec.cn.core.interceptor.access.AccessInterceptor" />
+            <!-- 后台权限拦截器 -->
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.duoec.cn.core.interceptor.ViewCacheInterceptor" >
+                <!-- 静态化处理 -->
+                <!--
+                可用值: mongoDBViewCacheService / redisViewCacheService
+                mongoDBViewCacheService: mongoDB存储,实现逻辑:如果缓存不存在则直接取,如果缓存存在,则直接返回,但如果缓存久旧,则发起另一个线程去重新加载缓存
+                redisViewCacheService: redis存储,实现逻辑:如果缓存不存在则直接取,如果缓存存在,则直接返回
+                -->
+                <property name="pageCacheService" ref="redisViewCacheService"/>
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

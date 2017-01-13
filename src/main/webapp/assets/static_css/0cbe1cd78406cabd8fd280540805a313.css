@@ -1,0 +1,137 @@
+#main-banner .unslider-banner ul li{
+    width: 100%;
+    height: 382px;
+}
+.wrap_1000 h3{
+    text-align: center;
+    font-size: 24px;
+    line-height: 32px;
+    background: url("/assets/img/h3_bg.png") no-repeat center;
+    padding-top: 30px;
+}
+
+#about-us{
+    position: relative;
+}
+#about-us>.about-us-content{
+    width: 490px;
+    float: left;
+    margin-right: 20px;
+    font-size: 14px;
+    line-height: 26px;
+    text-indent: 26px;
+}
+#about-us>.about-us-content>p{
+    margin-bottom: 16px;
+}
+#about-us>.about-us-content>.more{
+    position: relative;
+    bottom: 10px;
+    left:10px;
+    text-align: center;
+    margin: 20px 2px;
+    display: inline-block;
+}body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+    margin: 0;
+    padding: 0;
+    font-family: 微软雅黑, 'Microsoft YaHei';
+    color: rgb(89, 89, 89);
+}
+.wrap_1000{
+    width: 1000px;
+    margin: 0 auto;
+}
+.full-wrap{
+    width: 100%;
+}
+
+.icon{
+    display: inline-block;
+    vertical-align: middle;
+}
+.icon.icon-400{
+    background: url("/assets/img/phone.png");
+    width: 32px;
+    height: 32px;
+}
+.m-b-10{
+    margin-bottom: 10px;
+}
+.m-b-30{
+    margin-bottom: 30px;
+}
+.m-b-50{
+    margin-bottom: 50px;
+}
+
+/**
+ * ------------以下头部Logo样式------------
+ */
+#header{
+    margin-top: 10px;
+    position: relative;
+    height: 70px;
+}
+#header>.logo{
+    color: #AAA;
+}
+#header>.logo>strong{
+    line-height: 28px;
+    font-size: 18px;
+    display: inherit;
+    color: rgb(89, 89, 89);
+}
+#logo-img{
+    padding-right: 20px;
+    border-right: 1px solid #999;
+    float: left;
+    margin-right: 20px;
+}
+#header>.head-400{
+    position: absolute;
+    top: 10px;
+    right: 100px;
+    font-size: 28px;
+}
+
+/**
+ * ------------以下头部导航样式------------
+ */
+#head-nav{
+    border-top: 1px solid #999;
+    padding: 10px 0;
+}
+#head-nav a{
+    line-height: 57px;
+    display: inline-block;
+    color: #444;
+    font-size: 16px;
+    padding: 0 30px;
+    text-decoration: none;
+}
+#head-nav a:hover{
+    background:#55A8D8;
+    color: #f5f5f5;
+}
+#head-nav a.active{
+    background: #008CDE;
+    color: #f5f5f5;
+}
+
+/**
+ * ------------以下轮播样式------------
+ */
+.unslider-banner {
+    position: relative;
+    overflow: auto;
+    opacity: 0.8;
+}
+.unslider-banner ul li {
+    list-style: none;
+    float: left;
+    display: inline-block;
+    overflow: hidden;
+}
+.unslider-banner ul li>img{
+    width: 100%;
+}
