@@ -9,7 +9,6 @@ import com.duoec.cn.enums.CategoryTypeEnum;
 import com.duoec.cn.web.dojo.Article;
 import com.duoec.cn.web.dto.request.backend.ArticleQuery;
 import com.duoec.cn.web.dto.request.backend.ArticleSave;
-import com.duoec.cn.web.dto.request.backend.I18NSave;
 import com.duoec.cn.web.service.ArticleService;
 import com.duoec.commons.mongo.Pagination;
 import com.google.common.base.Strings;
@@ -50,7 +49,7 @@ public class ArticleBackendController extends BackendController {
     @Access(RoleEnum.Admin)
     @RequestMapping("/edit.html")
     public ModelAndView edit(@RequestParam(required = false) Long id) {
-        if(id != null && id > 0) {
+        if (id != null && id > 0) {
             Article article = articleService.get(id);
             addData("article", article);
         }
@@ -63,9 +62,9 @@ public class ArticleBackendController extends BackendController {
     @RequestMapping(method = RequestMethod.POST, value = "/edit.json")
     public ModelAndView save(@RequestBody ArticleSave request) {
         String message = articleService.save(request);
-        if(!Strings.isNullOrEmpty(message)) {
+        if (!Strings.isNullOrEmpty(message)) {
             return error(500, message);
-        }else{
+        } else {
             return success();
         }
     }

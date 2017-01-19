@@ -7,46 +7,36 @@
 <div class="row m-bottom-md">
     <div class="col-sm-6 m-bottom-sm">
         <h2 class="no-margin">
-            ${CATEGORY_TYPE.typeName}分类管理
+            文章管理
         </h2>
     </div>
     <div class="col-sm-6 text-right text-left-sm">
-        <a class="btn btn-success btn-sm" href="edit.html"><i class="fa fa-plus"></i> 添加分类</a>
+        <a class="btn btn-success btn-sm" href="edit.html"><i class="fa fa-plus"></i> 添加文章</a>
     </div>
 </div>
-
-<#macro loopCateList categoryList level>
-    <#list categoryList as item>
-    <tr>
-        <#list LANGUAGES as language>
-            <td style="text-indent: ${26 * level}px">${item.names[language.id]}</td>
-        </#list>
-        <td><i class="fa ${(item.status==1)?string('fa-check-square-o', 'fa-child')} m-right-xs"></i></td>
-        <td><i class="fa ${(item.visible==1)?string('fa-check-square-o', 'fa-child')} m-right-xs"></i></td>
-        <td>${item.sort}</td>
-        <td><a href="edit.html?id=${item.id}" class="label label-success">编辑</a></td>
-    </tr>
-    <#if item.children??>
-        <@loopCateList categoryList=item.children level=level + 1 />
-    </#if>
-    </#list>
-</#macro>
 
 <table class="table table-striped table-hover" id="dataTable">
     <thead>
     <tr>
-        <#list LANGUAGES as language>
-            <th>${language.id?upper_case}名称</th>
-        </#list>
-        <th>有效</th>
-        <th>可见</th>
-        <th>排序</th>
+        <th>标题</th>
+        <th>发布时间</th>
+        <th>状态</th>
+        <th>语言</th>
         <th>操作</th>
     </tr>
     </thead>
     <tbody>
-    <@loopCateList categoryList=list level=0/>
+        <#list list as item>
+        <tr>
+            <td>${item.title}</td>
+            <td>${item.updateTime?number_to_date}</td>
+            <td><i class="fa ${(item.status != -1)?string('fa-check-square-o', 'fa-child')} m-right-xs"></i></td>
+            <td>${item.language}</td>
+            <td><a href="edit.html?id=${item.id}" class="label label-success">编辑</a></td>
+        </tr>
+        </#list>
     </tbody>
 </table>
+<@pager total="${total}" pageNo="${pageNo!1}" pageSize="${pageSize!20}" tpl="page-backend"/>
 </@content>
 <@parent path="/web/backend/common/html.ftl" />

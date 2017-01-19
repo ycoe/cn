@@ -68,16 +68,12 @@
                                     <@categorySelector type="${ARTICLE_TYPE.type}" formName="cateIds[]" defaultText="--暂无分类--" value="${article???string(article.parentId, '')}" />
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">排序：</label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control" data-parsley-type="integer" name="sort" placeholder="请使用整数，越小越前，默认为255" value="${article???string(article.sort, '')}"/>
-                                </div>
-                            </div>
 
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">标识：</label>
                                 <div class="col-lg-10">
+                                    <input type="hidden" name="flags[]" value="" />
+                                    <input type="hidden" name="flags[]" value="" />
                                     <#list ArticleFlagEnums as articleFlag>
                                         <div class="checkbox inline-block m-right-md">
                                             <div class="custom-checkbox">
@@ -101,7 +97,7 @@
                         <div class="smart-widget-body">
                             文章保存后立即生效
                             <div class="text-right m-t-20">
-                                <input type="hidden" name="id" value="${article???string(article.id, '')}" />
+                                <input type="hidden" name="id" value="${article???string(article.id, 0)}" />
                                 <button type="submit" class="btn btn-success" id="form-save-btn">保 存</button>
                             </div>
                         </div>

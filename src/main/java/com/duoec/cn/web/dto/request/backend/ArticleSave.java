@@ -32,14 +32,14 @@ public class ArticleSave {
     private List<Long> cateIds;
 
     /**
-     * 排序，越小越前
-     */
-    private Integer sort;
-
-    /**
      * 标识
      */
     private List<String> flags;
+
+    /**
+     * 图片URL
+     */
+    private String coverImage;
 
     /**
      * 内容
@@ -86,14 +86,6 @@ public class ArticleSave {
         this.cateIds = cateIds;
     }
 
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
     public List<String> getFlags() {
         return flags;
     }
@@ -108,5 +100,13 @@ public class ArticleSave {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
     }
 }

@@ -59,6 +59,11 @@ public class Article {
      */
     private int status;
 
+    /**
+     * 标识：com.duoec.cn.enums.ArticleFlagEnum
+     */
+    private List<String> flags;
+
     public long getId() {
         return id;
     }
@@ -137,5 +142,13 @@ public class Article {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public void setFlags(List<String> flags) {
+        this.flags = flags;
+    }
+
+    public List<String> getFlags() {
+        return flags;
     }
 }
