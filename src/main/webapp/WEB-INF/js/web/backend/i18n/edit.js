@@ -7,10 +7,14 @@
         initForm: function () {
             $('#edit-form').autoForm({
                 success: function (json) {
-                    console.info(json);
-                    CN.gritterInfo('网站提醒', '保存成功！');
+                    if(json.code != 200) {
+                        CN.gritterError('网站警告', json.msg);
+                    }else{
+                        CN.gritterInfo('网站提醒', '保存成功！');
+                    }
                 },
                 error: function (msg) {
+                    CN
                     console.error(msg);
                 }
             });

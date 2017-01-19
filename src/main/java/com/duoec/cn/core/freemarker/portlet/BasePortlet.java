@@ -7,7 +7,7 @@ import com.duoec.cn.core.freemarker.FreemarkerResourceVars;
 import com.duoec.cn.core.freemarker.PortletException;
 import com.duoec.cn.core.freemarker.TemplateModelUtils;
 import com.duoec.cn.enums.ClientEnum;
-import com.fangdd.traffic.common.mongodb.SimpleTypeConverter;
+import com.duoec.commons.mongo.reflection.SimpleTypeConverter;
 import com.google.common.base.Strings;
 import freemarker.cache.TemplateLoader;
 import freemarker.core.BuiltInUtils;

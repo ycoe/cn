@@ -1,6 +1,7 @@
 package com.duoec.cn.core.interceptor;
 
 import com.duoec.cn.core.common.CommonConst;
+import com.duoec.cn.core.common.utils.NumberUtils;
 import com.duoec.cn.core.response.BufferedWrapperResponse;
 import com.duoec.cn.core.service.SiteService;
 import com.duoec.cn.core.service.ViewCacheService;
@@ -8,7 +9,6 @@ import com.duoec.cn.core.spring.annotation.ViewCache;
 import com.duoec.cn.core.view.MyModelAndView;
 import com.duoec.cn.web.controller.BaseController;
 import com.google.common.base.Strings;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

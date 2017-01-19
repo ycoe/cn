@@ -91,15 +91,14 @@ function initActiveNav() {
         }
         if(href && href !== 'javascript:;') {
             navs[href] = $(this);
-            $(this).click(function(){
-                $('.nav li.active').removeClass('active');
-                $(this).parents('li').addClass('active');
-            });
+            // $(this).click(function(){
+                // $('.nav li.active').removeClass('active');
+                // $(this).parents('li').addClass('active');
+            // });
         }
     });
 
     var pathname = window.location.pathname;
-    console.log(pathname);
     if(!matchActive(navs, pathname)) {
         //尝试使用referrer
         pathname = window.top.document.referrer;

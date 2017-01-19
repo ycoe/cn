@@ -6,7 +6,7 @@ import com.duoec.cn.core.freemarker.PortletException;
 import com.duoec.cn.core.freemarker.portlet.BaseFuturePortlet;
 import com.duoec.cn.core.freemarker.portlet.PortletParam;
 import com.duoec.cn.core.common.cache.ICache;
-import org.apache.commons.lang3.StringUtils;
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +28,12 @@ public abstract class ResourcePortlet extends BaseFuturePortlet {
     @Autowired
     ICache cache;
 
+    /**
+     * 引入模式： 0压缩进同一文件 1只作排重处理，还是使用原原始方式引入
+     */
+    @PortletParam
+    protected int type = 0;
+
     @PortletParam
     protected String src; //引入的js脚本
 
@@ -37,7 +43,7 @@ public abstract class ResourcePortlet extends BaseFuturePortlet {
     }
 
     protected File getSourceFile() throws PortletException {
-        if(StringUtils.isEmpty(src)){
+        if(Strings.isNullOrEmpty(src)){
             return null;
         }
         String srcPath = src;

@@ -3,9 +3,9 @@ package com.duoec.cn.core.freemarker.portlet.common;
 import com.duoec.cn.core.freemarker.portlet.BaseFuturePortlet;
 import com.duoec.cn.core.freemarker.portlet.Portlet;
 import com.duoec.cn.core.freemarker.portlet.PortletParam;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +54,7 @@ public class PagerPortlet extends BaseFuturePortlet {
         boolean showLast = false;
         boolean showRightMort = false;
 
-        if (StringUtils.isEmpty(url)) {
+        if (Strings.isNullOrEmpty(url)) {
             url = getDefaultPagedUrl();
         }
 

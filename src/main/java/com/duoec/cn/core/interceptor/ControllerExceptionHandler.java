@@ -32,18 +32,6 @@ public class ControllerExceptionHandler {
         }
     }
 
-//    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
-//    @ExceptionHandler({Http404Exception.class})
-//    public void handle404(Http404Exception e) {
-//        //先简单地转向到www.fangdd.com
-//        try {
-//            response.reset();
-//            response.sendRedirect("http://www.fangdd.com");
-//        } catch (IOException e1) {
-//            logger.error("301跳转失败, url=http://www.fangdd.com", e1);
-//        }
-//    }
-
     @ResponseStatus(HttpStatus.FOUND)
     @ExceptionHandler({Http406Exception.class})
     public void handle406(Http406Exception e, HttpServletResponse response) {

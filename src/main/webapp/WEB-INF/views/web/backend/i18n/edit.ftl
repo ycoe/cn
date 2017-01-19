@@ -4,11 +4,16 @@
 <meta name="keywords" content="${keywords!}" />
 </@content>
 <@content name="body">
-    <ul class="breadcrumb">
-        <li><span class="primary-font"><i class="icon-home"></i></span><a href="/manager/"> 后台首页</a></li>
-        <li><a href="/manager/i18n/list.html">语言包管理</a></li>
-        <li>语言包编辑</li>
-    </ul>
+    <div class="row m-bottom-md">
+        <div class="col-sm-6 m-bottom-sm">
+            <h2 class="no-margin">
+            语言包编辑
+            </h2>
+        </div>
+        <div class="col-sm-6 text-right text-left-sm">
+            <a class="btn btn-success btn-sm" href="list.html"><i class="fa  fa-bars"></i> 语言包列表</a>
+        </div>
+    </div>
     <form class="form-horizontal" method="post" id="edit-form" action="/manager/i18n/edit.json">
         <div class="col-md-8">
             <h3 class="header-text m-bottom-md">
@@ -21,13 +26,13 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label"><span class="required">*</span> 编码：</label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" data-parsley-required="true" name="code" placeholder="请使用字母开头，可使用数字、下划线"/>
+                                <input type="text" ${i18N???string('readonly="readonly"', '')} class="form-control" data-parsley-required="true" value="${i18N???string(i18N.id, '')}" name="code" placeholder="请使用字母开头，可使用数字、下划线"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">描述：</label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" name="desc" placeholder="用一句话描述此记录" />
+                                <input type="text" class="form-control" name="desc" value="${i18N???string(i18N.desc, '')}" placeholder="用一句话描述此记录" />
                             </div>
                         </div>
                     </div>
@@ -45,7 +50,7 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label"><span class="required">*</span> ${language.name}：</label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" name="value[${language.id}]" />
+                                <input type="text" class="form-control" name="value[${language.id}]" value="${i18N???string(i18N.values[language.id], '')}"/>
                             </div>
                         </div>
                     </#list>

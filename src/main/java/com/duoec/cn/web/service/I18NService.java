@@ -3,7 +3,7 @@ package com.duoec.cn.web.service;
 import com.duoec.cn.web.dojo.I18N;
 import com.duoec.cn.web.dto.request.backend.I18NQuery;
 import com.duoec.cn.web.dto.request.backend.I18NSave;
-import com.fangdd.traffic.common.mongodb.Pagination;
+import com.duoec.commons.mongo.Pagination;
 
 /**
  * Created by ycoe on 16/12/30.

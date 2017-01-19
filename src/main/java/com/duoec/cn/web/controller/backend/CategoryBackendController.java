@@ -10,7 +10,6 @@ import com.duoec.cn.web.dto.request.backend.CategoryQuery;
 import com.duoec.cn.web.dto.request.backend.CategorySave;
 import com.duoec.cn.web.service.CategoryService;
 import com.duoec.cn.web.service.init.impl.CategoryTreeInit;
-import com.fangdd.traffic.common.mongodb.Pagination;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,7 +42,6 @@ public class CategoryBackendController extends BackendController {
         CategoryTypeEnum categoryTypeEnum = initCategoryType(type);
 
         List<Category> categoryList = categoryTreeInit.getCategoryRoots(categoryTypeEnum.getType());
-        Pagination<Category> pagination = categoryService.list(categoryTypeEnum, request, pageNo, pageSize);
         addData("list", categoryList);
         return view("/backend/category/list.ftl");
     }

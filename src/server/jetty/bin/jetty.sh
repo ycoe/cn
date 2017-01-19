@@ -424,7 +424,7 @@ JAVA_OPTIONS+=("-Xmx2048M")
 JAVA_OPTIONS+=("-Dcom.sun.management.jmxremote.port=40300")
 JAVA_OPTIONS+=("-Dcom.sun.management.jmxremote.ssl=false")
 JAVA_OPTIONS+=("-Dcom.sun.management.jmxremote.authenticate=false")
-#JAVA_OPTIONS+=("-Djava.rmi.server.hostname=api.c.nh.fdd")
+#JAVA_OPTIONS+=("-Djava.rmi.server.hostname=cn.duoec.com")
 
 #开启remote debug模式，生产环境不能开启
 #JAVA_OPTIONS+=("-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005")

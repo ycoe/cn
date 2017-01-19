@@ -34,6 +34,8 @@
     <link href="${assetsUrl}/css/backend/simplify.css" rel="stylesheet">
 
     <@css />
+    <!-- Jquery -->
+    <script src="${assetsUrl}/js/backend/jquery-1.11.1.min.js"></script>
 </head>
 
 <body class="overflow-hidden">
@@ -156,8 +158,6 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
-    <!-- Jquery -->
-    <script src="${assetsUrl}/js/backend/jquery-1.11.1.min.js"></script>
 
     <!-- Bootstrap -->
     <script src="${assetsUrl}/js/backend/bootstrap/js/bootstrap.min.js"></script>

@@ -7,7 +7,7 @@ import com.duoec.cn.web.dojo.I18N;
 import com.duoec.cn.web.dto.request.backend.I18NQuery;
 import com.duoec.cn.web.dto.request.backend.I18NSave;
 import com.duoec.cn.web.service.I18NService;
-import com.fangdd.traffic.common.mongodb.Pagination;
+import com.duoec.commons.mongo.Pagination;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

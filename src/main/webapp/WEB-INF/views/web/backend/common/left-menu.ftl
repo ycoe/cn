@@ -24,7 +24,7 @@
             </a>
             <ul class="submenu bg-palette4">
                 <li><a href="/manager/i18n/list.html"><span class="submenu-label">语言包列表</span></a></li>
-                <li><a href="/manager/i18n/set.html"><span class="submenu-label">语言管理</span></a></li>
+                <li><a href="/manager/language/list.html"><span class="submenu-label">语言管理</span></a></li>
             </ul>
         </li>
 

@@ -13,7 +13,7 @@
         <span class="sr-only">Toggle Dropdown</span>
     </button>
     <ul class="dropdown-menu" role="menu">
-        <li data-value=""><a href="javascript:;">--顶级分类--</a></li>
+        <li data-value=""><a href="javascript:;">${defaultText!}</a></li>
         <@loopCateList categoryList=categoryList level=0/>
     </ul>
     <input type="hidden" name="${formName!}" value="${selected???string(selected.id, defaultValue)}">

@@ -1,6 +1,6 @@
 package freemarker.core;
 
-import com.fangdd.traffic.common.mongodb.SimpleTypeConverter;
+import com.duoec.commons.mongo.reflection.SimpleTypeConverter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import freemarker.ext.beans.*;

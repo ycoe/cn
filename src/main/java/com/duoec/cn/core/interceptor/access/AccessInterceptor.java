@@ -7,7 +7,6 @@ import com.duoec.cn.core.common.utils.UUIDUtils;
 import com.duoec.cn.core.common.cache.ICache;
 import com.duoec.cn.core.interceptor.access.enums.RoleEnum;
 import com.google.common.base.Strings;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,7 +105,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
             //跳转到登录界面
 
             String returnUrl = request.getRequestURI();
-            if (StringUtils.isNotEmpty(request.getQueryString())) {
+            if (!Strings.isNullOrEmpty(request.getQueryString())) {
                 returnUrl += "?" + request.getQueryString();
             }
             try {

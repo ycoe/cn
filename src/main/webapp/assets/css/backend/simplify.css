@@ -4092,7 +4092,7 @@ table tbody td.text-right {
     -webkit-border-radius: 3px;
     margin-bottom: 20px;
     border-color: #e4e4e4;
-    border-top-width: 4px;
+    /*border-top-width: 4px;*/
     background-color: #fff;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
     -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -4171,6 +4171,14 @@ table tbody td.text-right {
 
 .smart-widget .smart-widget-inner .smart-widget-hidden-section .widget-color-list li:last-child {
     margin-right: 0;
+}
+
+.smart-widget .smart-widget-inner .smart-widget-title {
+    text-indent: 24px;
+}
+
+.smart-widget .smart-widget-inner .smart-widget-title .header-text{
+    margin-bottom: 10px;
 }
 
 .smart-widget .smart-widget-inner .smart-widget-body {

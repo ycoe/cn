@@ -1,6 +1,7 @@
 package com.duoec.cn.web.dao;
 
 import com.duoec.cn.web.dojo.Language;
+import com.duoec.commons.mongo.core.YMongoClient;
 import org.springframework.stereotype.Service;
 
 /**

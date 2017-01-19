@@ -4,16 +4,16 @@
 <meta name="keywords" content="${keywords!}" />
 </@content>
 <@content name="body">
-<div class="row m-bottom-md">
-    <div class="col-sm-6 m-bottom-sm">
-        <h2 class="no-margin">
-        ${CATEGORY_TYPE.typeName}分类编辑
-        </h2>
+    <div class="row m-bottom-md">
+        <div class="col-sm-6 m-bottom-sm">
+            <h2 class="no-margin">
+            ${CATEGORY_TYPE.typeName}分类编辑
+            </h2>
+        </div>
+        <div class="col-sm-6 text-right text-left-sm">
+            <a class="btn btn-success btn-sm" href="list.html"><i class="fa  fa-bars"></i> 分类列表</a>
+        </div>
     </div>
-    <div class="col-sm-6 text-right text-left-sm">
-        <a class="btn btn-success btn-sm" href="list.html"><i class="fa  fa-bars"></i> 分类列表</a>
-    </div>
-</div>
     <form class="form-horizontal" method="post" id="edit-form" action="edit.json">
         <div class="col-md-8">
             <h3 class="header-text m-bottom-md">

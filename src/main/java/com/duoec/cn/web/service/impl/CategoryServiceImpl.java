@@ -9,7 +9,7 @@ import com.duoec.cn.web.dto.request.backend.CategorySave;
 import com.duoec.cn.web.service.CategoryService;
 import com.duoec.cn.web.service.init.impl.CategoryTreeInit;
 import com.duoec.cn.web.service.init.impl.LanguageInit;
-import com.fangdd.traffic.common.mongodb.Pagination;
+import com.duoec.commons.mongo.Pagination;
 import com.google.common.collect.Maps;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
@@ -52,11 +52,13 @@ public class CategoryServiceImpl implements CategoryService {
             return "无效分类类型值：" + request.getType();
         }
         Long categoryId = request.getId();
-        TreeNode self = categoryTreeInit.getById(categoryId);
-        if (categoryId != null && request.getParentId() != null) {
-            String parentStatus = categoryTreeInit.parentAvailableStatus(self, request.getParentId());
-            if (parentStatus != null) {
-                return parentStatus;
+        if(categoryId != null) {
+            TreeNode self = categoryTreeInit.getById(categoryId);
+            if (categoryId != null) {
+                String parentStatus = categoryTreeInit.parentAvailableStatus(self, request.getParentId());
+                if (parentStatus != null) {
+                    return parentStatus;
+                }
             }
         }
 

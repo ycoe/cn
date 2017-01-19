@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class SiteBackendController extends BackendController {
     @Access(RoleEnum.Admin)
     @RequestMapping
-    public ModelAndView index(){
+    public ModelAndView index() {
         return view("/backend/index.ftl");
     }
 }

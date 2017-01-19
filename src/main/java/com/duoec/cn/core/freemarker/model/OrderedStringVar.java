@@ -19,6 +19,8 @@ public class OrderedStringVar implements BaseTemplateModel {
      */
     private List<OrderedData<String>> orderedDatas = Lists.newArrayList();
 
+//    private List<String>
+
     /**
      * 最后修改时间
      */

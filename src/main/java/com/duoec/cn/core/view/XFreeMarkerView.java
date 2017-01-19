@@ -4,13 +4,13 @@ import com.duoec.cn.core.common.CommonConst;
 import com.duoec.cn.core.freemarker.FreemarkerResourceVars;
 import com.duoec.cn.core.freemarker.PortletException;
 import com.duoec.cn.core.freemarker.portlet.BasePortlet;
+import com.google.common.base.Strings;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.core.Environment;
 import freemarker.template.SimpleHash;
 import freemarker.template.Template;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -53,7 +53,7 @@ public class XFreeMarkerView extends FreeMarkerView { //NOSONAR
         Map<String, String> pathVars = (Map) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         if(pathVars != null) {
             for (Map.Entry<String, String> entry : pathVars.entrySet()) {
-                if (StringUtils.isNotEmpty(entry.getValue())) {
+                if (!Strings.isNullOrEmpty(entry.getValue())) {
                     resourceName = resourceName.replaceAll(entry.getValue(), "_");
                 }
             }

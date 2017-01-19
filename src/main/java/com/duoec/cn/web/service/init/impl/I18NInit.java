@@ -14,6 +14,10 @@ import java.util.Map;
  */
 @Service
 public class I18NInit extends BaseUpdatedInit {
+    private static final Map<String, String> I18N_VALUE_MAP = Maps.newHashMap();
+
+    private static final Map<String, I18N> I18N_MAP = Maps.newHashMap();
+
     @Autowired
     I18NDao i18NDao;
 
@@ -22,8 +26,6 @@ public class I18NInit extends BaseUpdatedInit {
         return i18NDao != null;
     }
 
-    private static final Map<String, I18N> I18N_MAP = Maps.newHashMap();
-
     @Override
     protected int getInterval() {
         return 10;
@@ -31,7 +33,7 @@ public class I18NInit extends BaseUpdatedInit {
 
     @Override
     protected void doRunInit() {
-        I18N_MAP.clear();
+        I18N_VALUE_MAP.clear();
     }
 
     @Override
@@ -48,18 +50,26 @@ public class I18NInit extends BaseUpdatedInit {
     }
 
     private void setI18N(I18N i18N) {
-        String key = i18N.getLanguage() + "_" + i18N.getCode();
         if (i18N.getStatus() < 0) {
-            //已删除
-            I18N_MAP.remove(key);
-        } else if (i18N.getStatus() == 1) {
-            I18N_MAP.put(key, i18N);
+            //删除
+            I18N_MAP.remove(i18N.getId());
+        } else {
+            I18N_MAP.put(i18N.getId(), i18N);
+        }
+        for (Map.Entry<String, String> entry : i18N.getValues().entrySet()) {
+            String key = entry.getKey() + "_" + i18N.getId();
+            if (i18N.getStatus() < 0) {
+                //已删除
+                I18N_VALUE_MAP.remove(key);
+            } else if (i18N.getStatus() == 1) {
+                I18N_VALUE_MAP.put(key, entry.getValue());
+            }
         }
     }
 
     public String getValue(String key) {
-        if (I18N_MAP.containsKey(key)) {
-            return I18N_MAP.get(key).getValue();
+        if (I18N_VALUE_MAP.containsKey(key)) {
+            return I18N_VALUE_MAP.get(key);
         } else {
             return null;
         }

@@ -1,5 +1,6 @@
 package com.duoec.cn.web.freemarker.portlet;
 
+import com.duoec.cn.core.common.utils.NumberUtils;
 import com.duoec.cn.core.freemarker.PortletException;
 import com.duoec.cn.core.freemarker.portlet.BaseFuturePortlet;
 import com.duoec.cn.core.freemarker.portlet.Portlet;
@@ -7,7 +8,6 @@ import com.duoec.cn.core.freemarker.portlet.PortletParam;
 import com.duoec.cn.web.dojo.Category;
 import com.duoec.cn.web.service.init.impl.CategoryTreeInit;
 import com.google.common.base.Strings;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

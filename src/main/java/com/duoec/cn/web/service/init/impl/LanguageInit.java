@@ -109,4 +109,23 @@ public class LanguageInit extends BaseUpdatedInit {
         }
         return null;
     }
+
+    public String setDefault(String languageId) {
+        if(CommonConst.DEFAULT_LANGUAGE.getId().equals(languageId)) {
+            return languageId + "已经是默认语言！";
+        }
+        Language language = get(languageId);
+        if(language == null) {
+            return "无效语言：" + languageId;
+        }
+        language.setStatus(1);
+        CommonConst.DEFAULT_LANGUAGE.setStatus(0);
+
+        //设置为默认语言
+        languageDao.updateOneByEntityId(CommonConst.DEFAULT_LANGUAGE);
+        languageDao.updateOneByEntityId(language);
+
+        CommonConst.DEFAULT_LANGUAGE = language;
+        return null;
+    }
 }

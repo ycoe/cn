@@ -1,7 +1,7 @@
 package com.duoec.cn.core.dto;
 
 import com.alibaba.fastjson.JSON;
-import com.fangdd.traffic.common.mongodb.AutoIncrement;
+import com.duoec.commons.mongo.annotation.AutoIncrement;
 import com.google.common.collect.Lists;
 
 import java.util.List;

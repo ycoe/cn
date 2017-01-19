@@ -50,4 +50,7 @@ logs/
 .idea/
 *.iml
 
+src/main/webapp/assets/static_js/
+src/main/webapp/assets/static_css/
+node_modules/
 /target/

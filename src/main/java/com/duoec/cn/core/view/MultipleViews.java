@@ -22,8 +22,6 @@ public class MultipleViews extends XFreeMarkerView {
         String contentType = request.getHeader("Content-Type");
         Access access = (Access) request.getAttribute(CommonConst.ACCESS_KEY);
         if (
-            contentType != null &&
-            contentType.toLowerCase().startsWith("application/json") &&
             access != null &&
             access.contentType() == ContentTypeEnum.APPLICATION_JSON
         ) {

@@ -4,7 +4,7 @@ import com.duoec.cn.enums.CategoryTypeEnum;
 import com.duoec.cn.web.dojo.Category;
 import com.duoec.cn.web.dto.request.backend.CategoryQuery;
 import com.duoec.cn.web.dto.request.backend.CategorySave;
-import com.fangdd.traffic.common.mongodb.Pagination;
+import com.duoec.commons.mongo.Pagination;
 
 /**
  * Created by ycoe on 17/1/11.

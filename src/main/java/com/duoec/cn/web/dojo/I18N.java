@@ -1,23 +1,25 @@
 package com.duoec.cn.web.dojo;
 
+import java.util.Map;
+
 /**
  * Created by ycoe on 16/12/30.
  */
 public class I18N {
     /**
-     * ID
+     * ID {代码}
      */
     private String id;
 
     /**
-     * 代码
+     * 描述
      */
-    private String code;
+    private String desc;
 
     /**
      * 语言
      */
-    private String language;
+    private Map<String, String> values;
 
     /**
      * 更新时间
@@ -29,38 +31,12 @@ public class I18N {
      */
     private int status;
 
-    /**
-     * 描述
-     */
-    private String desc;
-
-    /**
-     * 值
-     */
-    private String value;
-
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
     }
 
     public long getUpdateTime() {
@@ -87,11 +63,11 @@ public class I18N {
         this.desc = desc;
     }
 
-    public String getValue() {
-        return value;
+    public Map<String, String> getValues() {
+        return values;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setValues(Map<String, String> values) {
+        this.values = values;
     }
 }

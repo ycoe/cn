@@ -24,14 +24,14 @@ public class FreemarkerResourceVars implements TemplateModel {
     private static final Logger logger = LoggerFactory.getLogger(FreemarkerResourceVars.class);
 
     /**
-     * 视图目录,在第一次渲染视图时会被初始化(com.fangdd.cms.freemarker.XFreeMarkerView)
+     * 视图目录,在第一次渲染视图时会被初始化
      */
     public static File VIEW_DIR;
 
     /**
      * 变量前缀,为了不与其它变量冲突
      */
-    public static final String PREFIX = "fdd_x_prefix_";
+    public static final String PREFIX = "cn_x_prefix_";
 
     /**
      * CSS变量名

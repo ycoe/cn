@@ -32,6 +32,7 @@
     </bean>
 
     <import resource="classpath:spring/spring-cache.xml" />
+    <import resource="classpath:spring/spring-mongo.xml" />
     <!-- 配置文件加载路径检查, 默认使用JETTY_HOME变量, 要与property-placeholder配置域中的location配置保持一致. -->
     <!--<bean class="com.duoec.common.config.SpringConfigurePathCheckBean">-->
     <!--<property name="configRootPathKey" value="configRootPath" />-->
