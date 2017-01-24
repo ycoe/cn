@@ -8,6 +8,7 @@
                     return;
                 }
                 $('#uploadInfo').removeClass("hidden");
+
                 CN.post("/manager/uploader/import.json", url, function(data) {
                     log(data);
                     CN.gritterInfo('上传成功', '图片上传成功');
@@ -49,7 +50,7 @@
             });
 
         },
-        init: function () {
+        init: function (id) {
             var uploaderInterval = setInterval(function () {
                 if(typeof(WebUploader) !== 'undefined') {
                     edit.renderFileUploader();      //初始化上传控件
@@ -60,7 +61,4 @@
             edit.renderImageUrlInput(); 	//初始化图片URL表单
         }
     };
-    $(function(){
-        edit.init();
-    })
 })();

@@ -65,7 +65,10 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">上级分类：</label>
                                 <div class="col-lg-10">
-                                    <@categorySelector type="${ARTICLE_TYPE.type}" formName="cateIds" multi="1" defaultText="--暂无分类--" value="${article???string(article.parentIds?join(','), '')}" />
+                                    <#if article??>
+                                        <#assign parentIds=article.parentIds?join(',') />
+                                    </#if>
+                                    <@categorySelector type="${ARTICLE_TYPE.type}" formName="cateIds" multi="1" defaultText="--暂无分类--" value="${article!}" />
                                 </div>
                             </div>
 
@@ -90,7 +93,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <@imageUpload formName="coverImage" value="${article???string(article.coverImage, '')}"/>
+                <@imageUpload formName="coverImage" value="${article???string(article.coverImage, '')}" script="ImageUploader"/>
 
                 <div class="smart-widget">
                     <div class="smart-widget-inner">

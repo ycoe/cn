@@ -1,8 +1,13 @@
 package com.duoec.cn.web.service.init.impl;
 
+import com.duoec.cn.core.common.exceptions.BusinessException;
+import com.duoec.cn.core.common.utils.NumberUtils;
+import com.duoec.cn.enums.CategoryTypeEnum;
 import com.duoec.cn.web.dao.CategoryDao;
 import com.duoec.cn.web.dao.CnEntityDao;
 import com.duoec.cn.web.dojo.Category;
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +38,28 @@ public class CategoryTreeInit extends TreeInit<Category> {
         });
 
         return categories;
+    }
+
+    public List<Long> getAvailableCateList(String cateIds, CategoryTypeEnum type) {
+        List<Long> cateIdList = Lists.newArrayList();
+        if (!Strings.isNullOrEmpty(cateIds)) {
+            Splitter
+                    .on(",")
+                    .trimResults()
+                    .omitEmptyStrings()
+                    .split(cateIds)
+                    .forEach(cateId -> {
+                        if (!NumberUtils.isDigits(cateId)) {
+                            throw new BusinessException("无效分类ID：" + cateId);
+                        }
+                        Category category = getById(Long.parseLong(cateId));
+                        if (category == null && category.getType() != type.getType()) {
+                            throw new BusinessException("无效分类ID：" + cateId);
+                        }
+                        cateIdList.add(category.getId());
+                    });
+
+        }
+        return cateIdList;
     }
 }

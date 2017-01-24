@@ -10,11 +10,11 @@ var src = "./src/main/webapp/assets";
 var distSrc = "./src/main/webapp/dist";
 
 // Copy dependencies to build/node_modules/
-gulp.task('copyNpmDependenciesOnly', function() {
-    gulp
-        .src(gnf(null, './package.json'), {base:'./'})
-        .pipe(gulp.dest(distSrc + "/js/"));
-});
+// gulp.task('copyNpmDependenciesOnly', function () {
+//     gulp
+//         .src(gnf(null, './package.json'), {base: './'})
+//         .pipe(gulp.dest(distSrc + "/js/"));
+// });
 
 gulp.task("js", function () {
     return gulp.src([
@@ -57,7 +57,7 @@ gulp.task("img", function () {
 });
 
 gulp.task("default", gulp.series("clean",
-    gulp.parallel("copyNpmDependenciesOnly", "js", "img", "icon", "font", "css"))
+    gulp.parallel("js", "img", "icon", "font", "css"))
 );
 
 gulp.task("watch", function () {

@@ -29,6 +29,11 @@ public class ImageUploadPortlet extends BaseFuturePortlet{
     @PortletParam
     private String id;
 
+    /**
+     * 是否支持同时上传多个文件
+     */
+    @PortletParam
+    private int multiple = 1;
 
     @Override
     public void loadData() throws PortletException {

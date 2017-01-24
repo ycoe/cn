@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -120,13 +121,19 @@ public class FreemarkerResourceVars implements TemplateModel {
      */
     public void addJs(File file, Integer order) throws PortletException {
         long lastModified = file.lastModified();
-        String content = null;
+        StringBuilder content = new StringBuilder();
         try {
-            content = FileUtils.readFileToString(file, "UTF-8");
+            List<String> lines = FileUtils.readLines(file, "UTF-8");
+            lines.forEach(line -> {
+                if(line.trim().startsWith("//")) {
+                    return;
+                }
+                content.append(line);
+            });
         } catch (IOException e) {
             logger.error("读取文件[" + file.getAbsolutePath() +"]失败", e);
         }
-        addJs(file.getAbsolutePath(), content, order, lastModified);
+        addJs(file.getAbsolutePath(), content.toString(), order, lastModified);
     }
 
     /**

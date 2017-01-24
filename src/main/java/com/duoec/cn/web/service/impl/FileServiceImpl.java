@@ -1,7 +1,7 @@
 package com.duoec.cn.web.service.impl;
 
 import com.duoec.cn.core.common.CommonConst;
-import com.duoec.cn.core.common.utils.UUIDUtils;
+import com.duoec.cn.core.common.utils.MD5Utils;
 import com.duoec.cn.web.dto.FileInfoDto;
 import com.duoec.cn.web.service.FileService;
 import com.qiniu.common.QiniuException;
@@ -16,10 +16,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Created by ycoe on 17/1/17.
@@ -51,7 +53,7 @@ public class FileServiceImpl implements FileService {
     private UploadManager uploadManager;
 
     private UploadManager getUploadManager() {
-        if(uploadManager == null) {
+        if (uploadManager == null) {
             auth = Auth.create(accessKey, secretKey);
             z = Zone.autoZone();
             c = new Configuration(z);
@@ -67,7 +69,15 @@ public class FileServiceImpl implements FileService {
         String fileName = file.getOriginalFilename(); //原始名称
         info.setOriginalFileName(fileName);
         String fileType = fileName.substring(fileName.lastIndexOf(".")).toLowerCase();
-        String newFileName = UUIDUtils.generateUUID() + fileType;
+
+        byte[] bytes;
+        try {
+            bytes = file.getBytes();
+        } catch (IOException e) {
+            logger.error("读取文件失败！", e);
+            return info;
+        }
+        String newFileName = MD5Utils.md5(bytes) + fileType;
 
         //临时上传目录
         String tempUploadPath = CommonConst.STATIC_PATH + "tmp/";
@@ -82,13 +92,10 @@ public class FileServiceImpl implements FileService {
         String newFilePath = tempUploadPath + "/" + newFileName;
         File newFile = new File(newFilePath);
         try {
-            InputStream is = file.getInputStream();
-
             OutputStream os = new FileOutputStream(newFilePath);
-            StreamUtils.copy(is, os);
+            os.write(bytes);
             os.flush();
             os.close();
-            is.close();
         } catch (Exception e) {
             logger.error("上传失败!", e);
         }

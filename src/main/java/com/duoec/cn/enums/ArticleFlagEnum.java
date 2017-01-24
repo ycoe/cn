@@ -16,4 +16,12 @@ public enum ArticleFlagEnum {
     public String getText() {
         return text;
     }
+
+    public static ArticleFlagEnum getByName(String name) {
+        try {
+            return ArticleFlagEnum.valueOf(name);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
 }

@@ -1,10 +1,10 @@
 package com.duoec.cn.web.service.impl;
 
-import com.duoec.cn.core.common.utils.NumberUtils;
+import com.duoec.cn.core.common.exceptions.BusinessException;
 import com.duoec.cn.enums.ArticleFlagEnum;
+import com.duoec.cn.enums.CategoryTypeEnum;
 import com.duoec.cn.web.dao.ArticleDao;
 import com.duoec.cn.web.dojo.Article;
-import com.duoec.cn.web.dojo.Category;
 import com.duoec.cn.web.dojo.Language;
 import com.duoec.cn.web.dto.request.backend.ArticleQuery;
 import com.duoec.cn.web.dto.request.backend.ArticleSave;
@@ -12,7 +12,6 @@ import com.duoec.cn.web.service.ArticleService;
 import com.duoec.cn.web.service.init.impl.CategoryTreeInit;
 import com.duoec.cn.web.service.init.impl.LanguageInit;
 import com.duoec.commons.mongo.Pagination;
-import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.mongodb.client.model.Filters;
@@ -29,13 +28,13 @@ import java.util.List;
 @Service
 public class ArticleServiceImpl implements ArticleService {
     @Autowired
-    ArticleDao articleDao;
+    private ArticleDao articleDao;
 
     @Autowired
-    LanguageInit languageInit;
+    private LanguageInit languageInit;
 
     @Autowired
-    CategoryTreeInit categoryTreeInit;
+    private CategoryTreeInit categoryTreeInit;
 
     @Override
     public Pagination<Article> list(ArticleQuery query, int pageNo, int pageSize) {
@@ -44,7 +43,7 @@ public class ArticleServiceImpl implements ArticleService {
             match.put("status", query.getStatus());
         }
         if (!Strings.isNullOrEmpty(query.getKeyword())) {
-            match.put("title." + query.getLang(), new Document("$regex", query.getKeyword()));
+            match.put("title", new Document("$regex", query.getKeyword()));
         }
         if (query.getParentId() != -1) {
             match.put("parentId", query.getParentId());
@@ -71,7 +70,6 @@ public class ArticleServiceImpl implements ArticleService {
             return "无效语言ID：" + request.getLanguage();
         }
 
-        final String[] cateErrorMsg = {null};
         List<String> flags = request.getFlags();
         List<String> flagList = Lists.newArrayList();
         if (flags != null && !flags.isEmpty()) {
@@ -79,7 +77,7 @@ public class ArticleServiceImpl implements ArticleService {
                 if (Strings.isNullOrEmpty(flag)) {
                     continue;
                 }
-                ArticleFlagEnum flagEnum = ArticleFlagEnum.valueOf(flag);
+                ArticleFlagEnum flagEnum = ArticleFlagEnum.getByName(flag);
                 if (flagEnum == null) {
                     return "无效标识：" + flag;
                 }
@@ -88,31 +86,11 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         String cateIds = request.getCateIds();
-        List<Long> cateIdList = Lists.newArrayList();
-        if (!Strings.isNullOrEmpty(cateIds)) {
-            Splitter
-                    .on(",")
-                    .trimResults()
-                    .omitEmptyStrings()
-                    .split(cateIds)
-                    .forEach(cateId -> {
-                        if (cateErrorMsg[0] != null || cateId == null) {
-                            return;
-                        }
-                        if (!NumberUtils.isDigits(cateId)) {
-                            cateErrorMsg[0] = "无效分类ID：" + cateId;
-                            return;
-                        }
-                        Category category = categoryTreeInit.getById(Long.parseLong(cateId));
-                        if (category == null) {
-                            cateErrorMsg[0] = "无效分类ID：" + cateId;
-                        }
-                        cateIdList.add(category.getId());
-                    });
-
-            if (cateErrorMsg[0] != null) {
-                return cateErrorMsg[0];
-            }
+        List<Long> cateIdList;
+        try {
+            cateIdList = categoryTreeInit.getAvailableCateList(cateIds, CategoryTypeEnum.NEWS);
+        } catch (BusinessException e) {
+            return e.getMessage();
         }
 
         Article article = new Article();

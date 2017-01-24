@@ -226,6 +226,10 @@ public class BasePortlet {
         if (jsFile.exists()) {
             resourceVars.addJs(jsFile, order);
         }
+        File portletScriptFile = new File(portletBasePath + portletViewPath + script + ".js");
+        if (portletScriptFile.exists()) {
+            resourceVars.addJs(portletScriptFile, order);
+        }
     }
 
     protected String getPortletName() {

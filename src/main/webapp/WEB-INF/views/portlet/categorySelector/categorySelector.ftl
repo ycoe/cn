@@ -8,7 +8,7 @@
 </#macro>
 <div class="btn-group marginTB-xs category-selector ${(multi==1)?string('multi-selector', '')}">
     <button type="button" class="btn btn-default selector-text">
-        <#if selectedMap??>
+        <#if selectedMap?? && selectedMap?size &gt; 0>
             <#list selectedMap?keys as cateId>
                 ${selectedMap[cateId].names[LANGUAGE]}
                 <#sep>,

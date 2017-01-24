@@ -5,7 +5,7 @@
         <span class="sub-header">${subTitle}</span>
     </#if>
 </h3>
-<div class="smart-widget img-uploader">
+<div class="smart-widget img-uploader" id="${id}" multiple="${multiple}">
     <div class="smart-widget-inner">
         <div class="smart-widget-body">
             <div class="form-group text-center">
@@ -17,10 +17,15 @@
                     <input type="text" class="form-control" id="${id}PicInput" name="${formName}" value="${value!}" placeholder="图片URL">
                 </div>
             </div>
-
+            <div id="${id}_list" class="uploader-list"></div>
             <div class="text-right m-t-20">
-                <a href="javascript:;" class="img-upload-btn" id="${id}">点击上传</a>
+                <a href="javascript:;" class="img-upload-btn" id="${id}_btn">点击上传</a>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(function(){
+        new ImageUploader('${id}');
+    })
+</script>

@@ -16,6 +16,17 @@ public class MD5Utils {
 
     private MD5Utils(){}
 
+    public static String md5(byte[] bytes) {
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            md5.update(bytes);
+            return String.format("%032x", new BigInteger(1, md5.digest()));
+        } catch (NoSuchAlgorithmException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+        return null;
+    }
+
     public static String md5(String string) {
         try {
             MessageDigest md5 = MessageDigest.getInstance("MD5");

@@ -1,5 +1,6 @@
 package com.duoec.cn;
 
+import com.duoec.cn.core.common.CommonConst;
 import com.duoec.cn.core.common.exceptions.BusinessException;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -42,6 +43,17 @@ public class JettyServer {
     public static void main(String[] args) throws Exception {
         String contextPath = getHttpContextPath();
         int port = getServerPort();
+
+        CommonConst.EXECUTOR_SERVICE.execute(()->{
+            //执行 gulp watch
+            try {
+                Process process = Runtime.getRuntime().exec("gulp watch");
+                readProcessOutput(process);
+            } catch (IOException e) {
+                LOGGER.error("执行gulp watch失败，如果未安装gulp，请执行mvn clean install", e);
+            }
+        });
+
 
         Server server = createServer(contextPath, port);
         try {

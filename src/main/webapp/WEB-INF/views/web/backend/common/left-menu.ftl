@@ -39,7 +39,7 @@
             </a>
             <ul class="submenu bg-palette4">
                 <li><a href="/manager/category/product/list.html"><span class="submenu-label">产品分类管理</span></a></li>
-                <li><a href="form_validation.html"><span class="submenu-label">产品列表</span></a></li>
+                <li><a href="/manager/product/list.html"><span class="submenu-label">产品列表</span></a></li>
             </ul>
         </li>
         <li class="openable bg-palette4">
