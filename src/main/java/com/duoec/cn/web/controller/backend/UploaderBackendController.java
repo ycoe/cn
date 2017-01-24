@@ -7,6 +7,7 @@ import com.duoec.cn.web.dto.FileInfoDto;
 import com.duoec.cn.web.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,4 +44,10 @@ public class UploaderBackendController extends BackendController {
         return success(fileDto);
     }
 
+    @Access(value = RoleEnum.Admin, contentType = ContentTypeEnum.APPLICATION_JSON)
+    @RequestMapping(value = "/import.json", method = RequestMethod.POST)
+    public ModelAndView importImg(@RequestBody String url) {
+
+        return success(url);
+    }
 }

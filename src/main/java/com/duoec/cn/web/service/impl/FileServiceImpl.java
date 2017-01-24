@@ -40,6 +40,9 @@ public class FileServiceImpl implements FileService {
     @Value("${qiniu.bucket}")
     String bucketname;
 
+    @Value("${qiniu.assets.url}")
+    private String assetsUrl;
+
     private Auth auth;
     private Zone z;
     private Configuration c;
@@ -91,6 +94,7 @@ public class FileServiceImpl implements FileService {
         }
 
         info.setTempFileName(newFileName);
+        info.setUrl(assetsUrl + "/" + newFileName);
         info.setSize(file.getSize());
 
         //上传到七牛服务器

@@ -1,5 +1,6 @@
 package com.duoec.cn.web.service.impl;
 
+import com.duoec.cn.core.common.utils.NumberUtils;
 import com.duoec.cn.enums.ArticleFlagEnum;
 import com.duoec.cn.web.dao.ArticleDao;
 import com.duoec.cn.web.dojo.Article;
@@ -11,6 +12,7 @@ import com.duoec.cn.web.service.ArticleService;
 import com.duoec.cn.web.service.init.impl.CategoryTreeInit;
 import com.duoec.cn.web.service.init.impl.LanguageInit;
 import com.duoec.commons.mongo.Pagination;
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.mongodb.client.model.Filters;
@@ -85,17 +87,29 @@ public class ArticleServiceImpl implements ArticleService {
             }
         }
 
-        List<Long> cateIds = request.getCateIds();
-        if (cateIds != null && !cateIds.isEmpty()) {
-            cateIds.forEach(cateId -> {
-                if (cateErrorMsg[0] != null || cateId == null) {
-                    return;
-                }
-                Category category = categoryTreeInit.getById(cateId);
-                if (category == null) {
-                    cateErrorMsg[0] = "无效分类ID：" + cateId;
-                }
-            });
+        String cateIds = request.getCateIds();
+        List<Long> cateIdList = Lists.newArrayList();
+        if (!Strings.isNullOrEmpty(cateIds)) {
+            Splitter
+                    .on(",")
+                    .trimResults()
+                    .omitEmptyStrings()
+                    .split(cateIds)
+                    .forEach(cateId -> {
+                        if (cateErrorMsg[0] != null || cateId == null) {
+                            return;
+                        }
+                        if (!NumberUtils.isDigits(cateId)) {
+                            cateErrorMsg[0] = "无效分类ID：" + cateId;
+                            return;
+                        }
+                        Category category = categoryTreeInit.getById(Long.parseLong(cateId));
+                        if (category == null) {
+                            cateErrorMsg[0] = "无效分类ID：" + cateId;
+                        }
+                        cateIdList.add(category.getId());
+                    });
+
             if (cateErrorMsg[0] != null) {
                 return cateErrorMsg[0];
             }
@@ -107,8 +121,8 @@ public class ArticleServiceImpl implements ArticleService {
             article.setSummary(request.getSummary());
         }
         article.setLanguage(language.getId());
-        if (cateIds != null && !cateIds.isEmpty()) {
-            article.setParentIds(cateIds);
+        if (!cateIdList.isEmpty()) {
+            article.setParentIds(cateIdList);
         }
         article.setFlags(flagList);
 
@@ -127,6 +141,7 @@ public class ArticleServiceImpl implements ArticleService {
                 return "文章（id=" + articleId + "）不存在或已被删除！";
             }
             //更新
+            article.setId(articleId);
             articleDao.updateOneByEntityId(article);
         } else {
             //新增

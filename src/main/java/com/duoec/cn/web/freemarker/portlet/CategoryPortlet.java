@@ -7,10 +7,13 @@ import com.duoec.cn.core.freemarker.portlet.Portlet;
 import com.duoec.cn.core.freemarker.portlet.PortletParam;
 import com.duoec.cn.web.dojo.Category;
 import com.duoec.cn.web.service.init.impl.CategoryTreeInit;
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ycoe on 17/1/12.
@@ -32,20 +35,49 @@ public class CategoryPortlet extends BaseFuturePortlet {
     @PortletParam
     private String value;
 
+    /**
+     * 是否复选： 0否 1是
+     */
+    @PortletParam
+    private int multi = 0;
+
     @Autowired
     private CategoryTreeInit categoryTreeInit;
 
     @Override
     public void loadData() throws PortletException {
-        List<Category> cateList = categoryTreeInit.getCategoryRoots(type);
-        if (!Strings.isNullOrEmpty(value) && NumberUtils.isDigits(value)) {
-            cateList.forEach(category -> {
-                //尝试匹配选中值
-                if (category.getId() == Long.valueOf(value)) {
-                    addData("selected", category);
+        Map<String, Category> selectedMap = Maps.newHashMap();
+        if (multi == 1) {
+            //多选
+            if (!Strings.isNullOrEmpty(value)) {
+                // 有值
+                Splitter
+                        .on(",")
+                        .trimResults()
+                        .omitEmptyStrings()
+                        .split(value)
+                        .forEach(v -> {
+                            if (!NumberUtils.isDigits(v)) {
+                                return;
+                            }
+                            Category category = categoryTreeInit.getById(Long.parseLong(v));
+                            if (category != null) {
+                                selectedMap.put(v, category);
+                            }
+                        });
+            }
+        } else {
+            //单选
+            if (!Strings.isNullOrEmpty(value) && NumberUtils.isDigits(value)) {
+                Category category = categoryTreeInit.getById(Long.parseLong(value));
+                if (category != null) {
+                    selectedMap.put(value, category);
                 }
-            });
+            }
         }
+        addData("selectedMap", selectedMap);
+
+        List<Category> cateList = categoryTreeInit.getCategoryRoots(type);
         addData("categoryList", cateList);
     }
 }

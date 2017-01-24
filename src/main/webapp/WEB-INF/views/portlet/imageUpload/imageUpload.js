@@ -8,7 +8,7 @@
                     return;
                 }
                 $('#uploadInfo').removeClass("hidden");
-                CN.post("/api/file/upload", url, function(data) {
+                CN.post("/manager/uploader/import.json", url, function(data) {
                     log(data);
                     CN.gritterInfo('上传成功', '图片上传成功');
                     $('#' + ID + 'PicView').attr('src', data.data + '?imageMogr2/thumbnail/230x170!');
@@ -40,7 +40,7 @@
                 })
                 uploader.on('uploadSuccess', function (file, response) {
                     $("#" + id).find("input[type=file]").val("");
-                    var url = 'http://assets.duoec.com/' + response.data.tempFileName;
+                    var url = response.data.url;
                     $('#' + id + 'PicView').attr('src', url + '?imageMogr2/thumbnail/230x170!');
                     $('#' + id + 'PicInput').val(url);
 

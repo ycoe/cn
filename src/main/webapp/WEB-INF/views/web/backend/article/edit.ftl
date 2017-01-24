@@ -57,7 +57,7 @@
                                     </#if>
                                     <select class="form-control" name="language">
                                         <#list LANGUAGES as language>
-                                            <option ${(language.id == defaultLanguage)?string('selected="selected"', '')} value="${language.id}">${language.name}</option>
+                                            <option ${(language.id==defaultLanguage)?string('selected="selected"', '')} value="${language.id}">${language.name}</option>
                                         </#list>
                                     </select>
                                 </div>
@@ -65,7 +65,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">上级分类：</label>
                                 <div class="col-lg-10">
-                                    <@categorySelector type="${ARTICLE_TYPE.type}" formName="cateIds[]" defaultText="--暂无分类--" value="${article???string(article.parentId, '')}" />
+                                    <@categorySelector type="${ARTICLE_TYPE.type}" formName="cateIds" multi="1" defaultText="--暂无分类--" value="${article???string(article.parentIds?join(','), '')}" />
                                 </div>
                             </div>
 
@@ -90,7 +90,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <@imageUpload formName="coverImage" />
+                <@imageUpload formName="coverImage" value="${article???string(article.coverImage, '')}"/>
 
                 <div class="smart-widget">
                     <div class="smart-widget-inner">
@@ -116,7 +116,7 @@
                 </div>
                 <div class="smart-widget-body">
                     <div class="form-group">
-                        <@editor id="content" formName="content">${(article ?? && article.content[LANGUAGE])?string(article.content[LANGUAGE], '')}</@editor>
+                        <@editor id="content" formName="content">${article???string(article.content, '')}</@editor>
                     </div>
                 </div>
             </div>

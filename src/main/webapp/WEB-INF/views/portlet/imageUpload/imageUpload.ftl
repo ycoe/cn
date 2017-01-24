@@ -8,8 +8,9 @@
 <div class="smart-widget img-uploader">
     <div class="smart-widget-inner">
         <div class="smart-widget-body">
-            <img id="${id}PicView" src="${value!}" class="picView m-bottom-md"/>
-
+            <div class="form-group text-center">
+                <img id="${id}PicView" src="${value!}" class="picView m-bottom-md"/>
+            </div>
             <div class="form-group">
                 <label class="col-lg-4 control-label" for="${id}PicInput">图片URL <span id="uploadInfo" class="red hidden">(正在上传...)</span></label>
                 <div class="col-lg-8">

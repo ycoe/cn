@@ -2182,6 +2182,7 @@ a.list-group-item.active:focus {
 
 .scroll-to-top.active {
     right: 10px;
+    z-index: 10000;
 }
 
 #theme-setting {

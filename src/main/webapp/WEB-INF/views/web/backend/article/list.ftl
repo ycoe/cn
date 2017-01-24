@@ -19,7 +19,7 @@
     <thead>
     <tr>
         <th>标题</th>
-        <th>发布时间</th>
+        <th>更新时间</th>
         <th>状态</th>
         <th>语言</th>
         <th>操作</th>

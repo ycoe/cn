@@ -29,7 +29,7 @@ public class ArticleSave {
     /**
      * 分类，支持多个分类！
      */
-    private List<Long> cateIds;
+    private String cateIds;
 
     /**
      * 标识
@@ -78,11 +78,11 @@ public class ArticleSave {
         this.language = language;
     }
 
-    public List<Long> getCateIds() {
+    public String getCateIds() {
         return cateIds;
     }
 
-    public void setCateIds(List<Long> cateIds) {
+    public void setCateIds(String cateIds) {
         this.cateIds = cateIds;
     }
 
