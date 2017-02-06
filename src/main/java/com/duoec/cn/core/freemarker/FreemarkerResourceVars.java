@@ -129,6 +129,7 @@ public class FreemarkerResourceVars implements TemplateModel {
                     return;
                 }
                 content.append(line);
+                content.append("\n");
             });
         } catch (IOException e) {
             logger.error("读取文件[" + file.getAbsolutePath() +"]失败", e);

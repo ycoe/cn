@@ -1,5 +1,5 @@
 <div class="wrap_1000" id="header">
-    <img src="${assetsUrl}/img/logo.png" id="logo-img" alt=""/>
+    <img src="${assetsUrl}/img/logo.jpg" id="logo-img" alt=""/>
     <div class="logo">
         <strong>${'title'?i18n}</strong>
         ${domain!}

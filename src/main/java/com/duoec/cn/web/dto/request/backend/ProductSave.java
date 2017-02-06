@@ -17,6 +17,11 @@ public class ProductSave {
     private String name;
 
     /**
+     * 概要，主要用于首页展示
+     */
+    private String summary;
+
+    /**
      * 当前语言
      */
     private String language;
@@ -55,6 +60,14 @@ public class ProductSave {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public String getLanguage() {

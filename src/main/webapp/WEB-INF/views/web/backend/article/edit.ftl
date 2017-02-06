@@ -25,6 +25,12 @@
                     <div class="smart-widget-inner">
                         <div class="smart-widget-body">
                             <div class="form-group">
+                                <label class="col-lg-2 control-label">code：</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" name="code" value="${article???string(article.code, '')}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-lg-2 control-label"><span class="required">*</span> 标题：</label>
                                 <div class="col-lg-10">
                                     <input type="text" class="form-control" name="title" data-parsley-required="true" value="${article???string(article.title, '')}" />
@@ -65,7 +71,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">上级分类：</label>
                                 <div class="col-lg-10">
-                                    <#if article??>
+                                    <#if article?? && article.parentIds??>
                                         <#assign parentIds=article.parentIds?join(',') />
                                     </#if>
                                     <@categorySelector type="${ARTICLE_TYPE.type}" formName="cateIds" multi="1" defaultText="--暂无分类--" value="${article!}" />
@@ -80,7 +86,7 @@
                                     <#list ArticleFlagEnums as articleFlag>
                                         <div class="checkbox inline-block m-right-md">
                                             <div class="custom-checkbox">
-                                                <input type="checkbox" id="${articleFlag.name()}_checkbox" name="flags[]" value="${articleFlag.name()}" ${(article?? && article.flags?seq_contains(articleFlag.name()))?string('checked="checked"', '')} >
+                                                <input type="checkbox" id="${articleFlag.name()}_checkbox" name="flags[]" value="${articleFlag.name()}" ${(article?? && article.flags?? && article.flags?seq_contains(articleFlag.name()))?string('checked="checked"', '')} >
                                                 <label for="${articleFlag.name()}_checkbox"></label>
                                             </div>
                                             <div class="inline-block vertical-top">${articleFlag.text}</div>

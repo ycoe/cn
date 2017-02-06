@@ -63,7 +63,7 @@ public class LanguageInit extends BaseUpdatedInit {
                 Language language = getDefaultLanguage();
                 CommonConst.DEFAULT_LANGUAGE = language;
                 LANGUAGES.put(language.getId(), language);
-                languageDao.insert(language);
+                languageDao.insertOne(language);
             } else {
                 for (Map.Entry<String, Language> entry : LANGUAGES.entrySet()) {
                     CommonConst.DEFAULT_LANGUAGE = entry.getValue();
@@ -122,8 +122,8 @@ public class LanguageInit extends BaseUpdatedInit {
         CommonConst.DEFAULT_LANGUAGE.setStatus(0);
 
         //设置为默认语言
-        languageDao.updateOneByEntityId(CommonConst.DEFAULT_LANGUAGE);
-        languageDao.updateOneByEntityId(language);
+        languageDao.update(CommonConst.DEFAULT_LANGUAGE);
+        languageDao.update(language);
 
         CommonConst.DEFAULT_LANGUAGE = language;
         return null;

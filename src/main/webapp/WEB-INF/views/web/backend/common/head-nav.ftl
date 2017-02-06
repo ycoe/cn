@@ -32,8 +32,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                <i class="fa fa-inbox fa-lg"></i><span class="m-left-xs">站内信</span>
+                            <a href="/" target="_blank">
+                                <i class="fa fa-inbox fa-lg"></i><span class="m-left-xs">网站首页</span>
                                 <#--<span class="badge badge-danger bounceIn animation-delay3">2</span>-->
                             </a>
                         </li>

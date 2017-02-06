@@ -30,6 +30,12 @@
                                     <input type="text" class="form-control" name="name" data-parsley-required="true" value="${product???string(product.name, '')}" />
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">概要：</label>
+                                <div class="col-lg-10">
+                                    <textarea name="summary" class="form-control">${product???string(product.summary!, '')}</textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -59,7 +65,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">上级分类：</label>
                                 <div class="col-lg-10">
-                                    <#if product??>
+                                    <#if product?? && product.parentIds??>
                                         <#assign parentIds=product.parentIds?join(',') />
                                     </#if>
                                     <@categorySelector type="${PRODUCT_TYPE.type}" formName="cateIds" multi="1" defaultText="--暂无分类--" value="${parentIds!}" />
@@ -74,7 +80,7 @@
                                     <#list ProductFlagEnums as productFlag>
                                         <div class="checkbox inline-block m-right-md">
                                             <div class="custom-checkbox">
-                                                <input type="checkbox" id="${productFlag.name()}_checkbox" name="flags[]" value="${productFlag.name()}" ${(product?? && product.flags?seq_contains(productFlag.name()))?string('checked="checked"', '')} >
+                                                <input type="checkbox" id="${productFlag.name()}_checkbox" name="flags[]" value="${productFlag.name()}" ${(product?? && product.flags?? && product.flags?seq_contains(productFlag.name()))?string('checked="checked"', '')} >
                                                 <label for="${productFlag.name()}_checkbox"></label>
                                             </div>
                                             <div class="inline-block vertical-top">${productFlag.text}</div>

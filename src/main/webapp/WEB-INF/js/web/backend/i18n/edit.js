@@ -14,8 +14,7 @@
                     }
                 },
                 error: function (msg) {
-                    CN
-                    console.error(msg);
+                    CN.gritterError('网站警告', msg);
                 }
             });
         }

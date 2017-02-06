@@ -12,6 +12,11 @@ public class ArticleSave {
     private long id;
 
     /**
+     * 如果有值，则每种语言下必须唯一！
+     */
+    private String code;
+
+    /**
      * 标题
      */
     private String title;
@@ -52,6 +57,14 @@ public class ArticleSave {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getTitle() {

@@ -39,14 +39,23 @@
             </a>
             <ul class="submenu bg-palette4">
                 <li><a href="/manager/category/product/list.html"><span class="submenu-label">产品分类管理</span></a></li>
-                <li><a href="/manager/product/list.html"><span class="submenu-label">产品列表</span></a></li>
+                <li class="openable">
+                    <a href="#">
+                        <small class="badge badge-success badge-square bounceIn animation-delay2 m-left-xs pull-right">2</small>
+                        <span class="submenu-label">产品管理</span>
+                    </a>
+                    <ul class="submenu third-level">
+                        <li><a href="/manager/product/list.html"><span class="submenu-label">产品列表</span></a></li>
+                        <li><a href="/manager/product/edit.html"><span class="submenu-label">添加产品</span></a></li>
+                    </ul>
+                </li>
             </ul>
         </li>
         <li class="openable bg-palette4">
             <a href="#">
                 <span class="menu-content block">
                     <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                    <span class="text m-left-sm">内容管理</span>
+                    <span class="text m-left-sm">文章管理</span>
                     <span class="submenu-icon"></span>
                 </span>
                 <span class="menu-content-hover block">NEWS</span>
@@ -55,9 +64,7 @@
                 <li><a href="/manager/category/news/list.html"><span class="submenu-label">文章分类管理</span></a></li>
                 <li class="openable">
                     <a href="#">
-                        <small class="badge badge-success badge-square bounceIn animation-delay2 m-left-xs pull-right">
-                            2
-                        </small>
+                        <small class="badge badge-success badge-square bounceIn animation-delay2 m-left-xs pull-right">2</small>
                         <span class="submenu-label">文章管理</span>
                     </a>
                     <ul class="submenu third-level">

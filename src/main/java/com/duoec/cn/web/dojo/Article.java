@@ -15,6 +15,11 @@ public class Article {
     private long id;
 
     /**
+     * 可以通过此值进行调用，每种语言唯一！
+     */
+    private String code;
+
+    /**
      * 标题
      */
     private String title;
@@ -70,6 +75,14 @@ public class Article {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getTitle() {

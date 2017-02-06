@@ -43,9 +43,9 @@ public class I18NServiceImpl implements I18NService {
         Bson query = Filters.eq("_id", request.getCode());
         if (i18nDao.exists(query)) {
             //如果已经存在
-            i18nDao.updateOneByEntityId(i18N);
+            i18nDao.updateOne(query, i18N);
         } else {
-            i18nDao.insert(i18N);
+            i18nDao.insertOne(i18N);
         }
         return null;
     }

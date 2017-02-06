@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ArticleDao extends CnEntityDao<Article> {
     @Override
-    protected Class<Article> getEntityClass() {
+    protected Class<Article> getDocumentClass() {
         return Article.class;
     }
 

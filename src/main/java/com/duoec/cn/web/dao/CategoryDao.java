@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryDao extends CnEntityDao<Category> {
     @Override
-    protected Class<Category> getEntityClass() {
+    protected Class<Category> getDocumentClass() {
         return Category.class;
     }
 

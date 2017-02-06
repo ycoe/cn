@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LanguageDao extends CnEntityDao<Language> {
     @Override
-    protected Class<Language> getEntityClass() {
+    protected Class<Language> getDocumentClass() {
         return Language.class;
     }
 

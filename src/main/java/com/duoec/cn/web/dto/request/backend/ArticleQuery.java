@@ -1,5 +1,7 @@
 package com.duoec.cn.web.dto.request.backend;
 
+import com.duoec.cn.enums.ArticleFlagEnum;
+
 /**
  * Created by ycoe on 17/1/14.
  */
@@ -23,6 +25,11 @@ public class ArticleQuery {
      * 文章状态
      */
     private Integer status;
+
+    /**
+     * 标识
+     */
+    private ArticleFlagEnum flag;
 
     public String getLang() {
         return lang;
@@ -54,5 +61,13 @@ public class ArticleQuery {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public void setFlag(ArticleFlagEnum flag) {
+        this.flag = flag;
+    }
+
+    public ArticleFlagEnum getFlag() {
+        return flag;
     }
 }

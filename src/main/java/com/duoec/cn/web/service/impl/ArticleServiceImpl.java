@@ -21,12 +21,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by ycoe on 17/1/14.
  */
 @Service
 public class ArticleServiceImpl implements ArticleService {
+    private static final Pattern CODE_PATTERN = Pattern.compile("^[\\w|_][\\w|_|\\d]+$");
+
     @Autowired
     private ArticleDao articleDao;
 
@@ -113,6 +116,28 @@ public class ArticleServiceImpl implements ArticleService {
         article.setUpdateTime(now);
 
         long articleId = request.getId();
+        String code = request.getCode();
+        if (!Strings.isNullOrEmpty(code)) {
+
+            //检查合法性
+            if (!CODE_PATTERN.matcher(code).find()) {
+                return "code必须以字母、或下划线开头，包含数字、字母或下划线";
+            }
+
+            //尝试检查是否唯一
+            Document codeQuery = new Document("code", code)
+                    .append("language", article.getLanguage());
+
+            if (articleId > 0) {
+                //如果是修改的，则先排除自己
+                codeQuery.put("_id", new Document("$ne", articleId));
+            }
+            if (articleDao.exists(codeQuery)) {
+                return "语言：" + article.getLanguage() + ", code: " + code + "已经存在！";
+            }
+            article.setCode(code);
+        }
+
         if (articleId > 0) {
             //尝试查找
             if (!articleDao.exists(Filters.eq("_id", articleId))) {
@@ -120,13 +145,36 @@ public class ArticleServiceImpl implements ArticleService {
             }
             //更新
             article.setId(articleId);
-            articleDao.updateOneByEntityId(article);
+            articleDao.update(article);
         } else {
             //新增
             article.setCreateTime(now);
-            articleDao.insert(article);
+            articleDao.insertOne(article);
         }
 
         return null;
+    }
+
+    @Override
+    public Article getByCode(String code, String language) {
+        Document query = new Document("code", code)
+                .append("language", language)
+                .append("status", 0);
+        return articleDao.getEntity(query);
+    }
+
+    @Override
+    public List<Article> query(ArticleQuery query, int pageNo, int pageSize) {
+        Document match = new Document();
+        if (query.getStatus() != null) {
+            match.put("status", query.getStatus());
+        }
+        if (query.getParentId() != -1) {
+            match.put("parentId", query.getParentId());
+        }
+        if (query.getFlag() != null) {
+            match.put("flags", query.getFlag().name());
+        }
+        return articleDao.findEntities(match, Sorts.descending("updateTime"), (pageNo - 1) * pageSize, pageSize);
     }
 }

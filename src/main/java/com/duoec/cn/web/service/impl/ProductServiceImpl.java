@@ -94,6 +94,10 @@ public class ProductServiceImpl implements ProductService {
         }
 
         Product product = new Product();
+        if(!Strings.isNullOrEmpty(request.getSummary())) {
+            product.setSummary(request.getSummary());
+        }
+
         product.setName(request.getName());
         product.setLanguage(language.getId());
         if (!cateIdList.isEmpty()) {
@@ -117,11 +121,11 @@ public class ProductServiceImpl implements ProductService {
             }
             //更新
             product.setId(productId);
-            productDao.updateOneByEntityId(product);
+            productDao.update(product);
         } else {
             //新增
             product.setCreateTime(now);
-            productDao.insert(product);
+            productDao.insertOne(product);
         }
 
         return null;

@@ -20,6 +20,11 @@ public class Product {
     private String name;
 
     /**
+     * 概要，主要用于首页展示
+     */
+    private String summary;
+
+    /**
      * 内容
      */
     private String content;
@@ -73,6 +78,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public String getContent() {

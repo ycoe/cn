@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class I18NDao extends CnEntityDao<I18N> {
     @Override
-    protected Class<I18N> getEntityClass() {
+    protected Class<I18N> getDocumentClass() {
         return I18N.class;
     }
 

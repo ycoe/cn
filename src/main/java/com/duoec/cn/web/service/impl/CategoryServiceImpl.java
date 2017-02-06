@@ -95,10 +95,10 @@ public class CategoryServiceImpl implements CategoryService {
             }
             //修改
             category.setId(id);
-            categoryDao.updateOneByEntityId(category);
+            categoryDao.update(category);
         } else {
             //新增
-            categoryDao.insert(category);
+            categoryDao.insertOne(category);
         }
         categoryTreeInit.init();
         return null;
