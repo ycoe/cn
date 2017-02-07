@@ -38,6 +38,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Pagination<Product> list(ProductQuery query, int pageNo, int pageSize) {
+        Document match = getFilters(query);
+        return productDao.findEntitiesWithTotal(match, Sorts.descending("updateTime"), (pageNo - 1) * pageSize, pageSize);
+    }
+
+    private Document getFilters(ProductQuery query) {
         Document match = new Document();
         if (query.getStatus() != null) {
             match.put("status", query.getStatus());
@@ -46,9 +51,20 @@ public class ProductServiceImpl implements ProductService {
             match.put("name", new Document("$regex", query.getKeyword()));
         }
         if (query.getParentId() != -1) {
-            match.put("parentId", query.getParentId());
+            match.put("parentIds", query.getParentId());
         }
-        return productDao.findEntitiesWithTotal(match, Sorts.descending("updateTime"), (pageNo - 1) * pageSize, pageSize);
+
+        if(!Strings.isNullOrEmpty(query.getLang())) {
+            match.put("language", query.getLang());
+        }
+
+        if (!Strings.isNullOrEmpty(query.getFlag())) {
+            ProductFlagEnum flag = ProductFlagEnum.getByName(query.getFlag());
+            if (flag != null) {
+                match.put("flags", flag.name());
+            }
+        }
+        return match;
     }
 
     @Override
@@ -94,7 +110,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         Product product = new Product();
-        if(!Strings.isNullOrEmpty(request.getSummary())) {
+        if (!Strings.isNullOrEmpty(request.getSummary())) {
             product.setSummary(request.getSummary());
         }
 
@@ -129,5 +145,11 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return null;
+    }
+
+    @Override
+    public List<Product> query(ProductQuery query, int pageNo, int pageSize) {
+        Document match = getFilters(query);
+        return productDao.findEntities(match, Sorts.descending("updateTime"), (pageNo - 1) * pageSize, pageSize);
     }
 }

@@ -1,0 +1,17 @@
+/**
+ * ------------以下轮播样式------------
+ */
+.unslider-banner {
+    position: relative;
+    overflow: auto;
+    opacity: 0.8;
+}
+.unslider-banner ul li {
+    list-style: none;
+    float: left;
+    display: inline-block;
+    overflow: hidden;
+}
+.unslider-banner ul li>img{
+    width: 100%;
+}

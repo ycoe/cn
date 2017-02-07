@@ -5,7 +5,9 @@ package com.duoec.cn.enums;
  */
 public enum ProductFlagEnum {
     Hot("热卖"),
-    Recommend("推荐"),;
+    Recommend("推荐"),
+    Index("首页")
+    ;
 
     private String text;
 

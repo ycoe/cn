@@ -1,4 +1,3 @@
-<#assign pageName="index" />
 <@content name="head">
     <title>${'title'?i18n}</title>
     <meta name="description" content="${description!}" />

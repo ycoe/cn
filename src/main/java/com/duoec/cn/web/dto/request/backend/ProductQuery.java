@@ -1,5 +1,7 @@
 package com.duoec.cn.web.dto.request.backend;
 
+import com.duoec.cn.enums.ProductFlagEnum;
+
 /**
  * Created by ycoe on 17/1/14.
  */
@@ -23,6 +25,11 @@ public class ProductQuery {
      * 文章状态
      */
     private Integer status;
+
+    /**
+     * 标识
+     */
+    private String flag;
 
     public String getLang() {
         return lang;
@@ -54,5 +61,13 @@ public class ProductQuery {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
+    public String getFlag() {
+        return flag;
     }
 }

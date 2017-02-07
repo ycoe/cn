@@ -38,7 +38,7 @@ public class ProductBackendController extends BackendController {
     ) {
         if (Strings.isNullOrEmpty(query.getLang())) {
             //如果没有指定语言时，使用默认语言
-            query.setLang(CommonConst.DEFAULT_LANGUAGE.getId());
+//            query.setLang(CommonConst.DEFAULT_LANGUAGE.getId());
         }
         Pagination<Product> pagination = productService.list(query, pageNo, pageSize);
         addData("total", pagination.getTotal());

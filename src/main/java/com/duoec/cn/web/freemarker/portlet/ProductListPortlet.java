@@ -5,20 +5,19 @@ import com.duoec.cn.core.freemarker.PortletException;
 import com.duoec.cn.core.freemarker.portlet.BaseFuturePortlet;
 import com.duoec.cn.core.freemarker.portlet.Portlet;
 import com.duoec.cn.core.freemarker.portlet.PortletParam;
-import com.duoec.cn.enums.ArticleFlagEnum;
-import com.duoec.cn.web.dojo.Article;
-import com.duoec.cn.web.dto.request.backend.ArticleQuery;
-import com.duoec.cn.web.service.ArticleService;
+import com.duoec.cn.web.dojo.Product;
+import com.duoec.cn.web.dto.request.backend.ProductQuery;
+import com.duoec.cn.web.service.ProductService;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 /**
- * Created by ycoe on 17/2/4.
+ * Created by ycoe on 17/2/7.
  */
-@Portlet("articleList$")
-public class ArticleListPortlet extends BaseFuturePortlet {
+@Portlet("productList$")
+public class ProductListPortlet extends BaseFuturePortlet {
     @PortletParam
     private int size = 3;
 
@@ -26,18 +25,18 @@ public class ArticleListPortlet extends BaseFuturePortlet {
     private String flag;
 
     @Autowired
-    private ArticleService articleService;
+    ProductService productService;
 
     @Override
     public void loadData() throws PortletException {
         String language = TraceContextHolder.getLanguage();
-        ArticleQuery query = new ArticleQuery();
+        ProductQuery query = new ProductQuery();
         query.setLang(language);
         query.setStatus(0);
-        if(!Strings.isNullOrEmpty(flag)) {
-            query.setFlag(ArticleFlagEnum.getByName(flag));
+        if (!Strings.isNullOrEmpty(flag)) {
+            query.setFlag(flag);
         }
-        List<Article> articles = articleService.query(query, 1, size);
-        addData("articles", articles);
+        List<Product> products = productService.query(query, 1, size);
+        addData("products", products);
     }
 }

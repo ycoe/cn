@@ -4,6 +4,6 @@
 </h3>
 <div class="about-us-content">
     ${article.content!}
-    <a class="more" href="/news/list-10.html">${'more'?i18n} &gt;</a>
+    <a class="more" href="/article/list-10.html">${'more'?i18n} &gt;</a>
 </div>
 <img src="${article.coverImage!}" alt="${article.title!}">

@@ -1,0 +1,49 @@
+#content-body {
+    display: -webkit-flex;
+    -webkit-flex-flow: row;
+    -webkit-align-items: stretch;
+    -webkit-justify-content: space-between; /*IE10还不支持*/
+    -ms-flex-flow: row wrap;
+    -ms-align-items: stretch;
+    -ms-justify-content: space-between;
+    display: flex;
+    flex-flow: row;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.left_nav {
+    width: 300px;
+    float: left;
+}
+
+.main_content {
+    flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    float: right;
+    margin-left: 20px;
+}
+
+.main_content > ul {
+    display: inline-block;
+}
+
+.main_content > ul > li {
+    float: left;
+    width: 150px;
+    margin: 10px;
+    height: 200px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.main_content > ul > li img {
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.main_content > ul > li a {
+    font-size: 14px;
+    color: #444;
+}
