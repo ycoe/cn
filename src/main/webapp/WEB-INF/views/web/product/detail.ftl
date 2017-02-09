@@ -1,48 +1,39 @@
+<#assign pageName="product" />
 <@content name="head">
-    <title>${'title'?i18n}</title>
-    <meta name="description" content="${description!}" />
-    <meta name="keywords" content="${keywords!}" />
+<title>${'title'?i18n}</title>
+<meta name="description" content="${description!}" />
+<meta name="keywords" content="${keywords!}" />
 </@content>
 <@content name="body">
     <@slider$ tpl="slider" />
-    <div class="wrap_1000 m-b-50" id="about-us">
-        <@article$ code="about_us" tpl="article_index"/>
+<div class="wrap_1000" id="content-body">
+    <div class="left_nav">
+        <@cateList$ type="product" tpl="cateList" selected="${query???string(query.parentId, '-1')}" />
     </div>
-    <div class="full-wrap p-t-30" id="product-list">
-        <div class="wrap_1000">
-            <@productList$ tpl="productList-index" flag="Index" size="2" />
+    <div class="main_content">
+        <div class="product_info">
+            <img class="cover" src="${product.coverImage?thumb(300, 300)}" alt="">
+            <div class="product_attrs">
+                <h1>${product.name}</h1>
+                <#if product.summary??>
+                <div class="summary">${product.summary}</div>
+                </#if>
+                <#if product.parentIds??>
+                <div class="row">
+                    <label>分类：</label>
+                    <span>
+                        <#list product.parentIds as cateId>
+                            <a href="/product/list-${cateId}.html">${cateId?string?cateName("")}</a>
+                            <#sep>, </#sep>
+                        </#list>
+                    </span>
+                </div>
+                </#if>
+            </div>
         </div>
+        <div class="product_detail">${product.content}</div>
     </div>
-    <div class="wrap_1000" id="news-list">
-        <@articleList$ tpl="articleList-index" size="3" flag="Index" />
-    </div>
+</div>
 
-    <div class="full-wrap p-t-20" id="contact-us">
-        <h3 class="m-b-30 m-t-20">
-            CONTACT US<br>
-            联系我们
-        </h3>
-        <p>
-            ${'any_help'?i18n}
-        </p>
-        <p class="contact-us-400">${'phont_400'?i18n}</p>
-        <div class="wrap_1000" id="contact-us-list">
-            <ul>
-                <li>
-                    <img src="${assetsUrl}/img/qq.png" alt="">
-                    ${'qq'?i18n}
-                </li>
-                <li>
-                    <img src="${assetsUrl}/img/wechat.png" alt="">
-                    ${'wechat'?i18n}
-                </li>
-                <li>
-                    <img src="${assetsUrl}/img/weibo.png" alt="">
-                    ${'weibo'?i18n}
-                </li>
-            </ul>
-        </div>
-        <img src="${assetsUrl}/img/qr.jpg" />
-    </div>
 </@content>
 <@parent path="/web/common/html.ftl" />

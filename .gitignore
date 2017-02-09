@@ -55,3 +55,4 @@ src/main/webapp/assets/static_css/
 src/main/webapp/tmp/
 node_modules/
 /target/
+/src/main/webapp/dist/
