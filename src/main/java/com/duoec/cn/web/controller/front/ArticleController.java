@@ -28,7 +28,7 @@ public class ArticleController extends BaseController {
     @RequestMapping("/")
     public ModelAndView list(
             @RequestParam(required = false, defaultValue = "1") int pageNo
-    ){
+    ) {
         ArticleQuery query = new ArticleQuery();
         return listView(query, pageNo);
     }
@@ -43,10 +43,20 @@ public class ArticleController extends BaseController {
         return listView(query, pageNo);
     }
 
-    @RequestMapping("/{id:\\d+}.html")
-    public ModelAndView detail(@PathVariable int id) {
-        Article article = articleService.get(id);
-        if(article == null) {
+    @RequestMapping("/{id}.html")
+    public ModelAndView detail(@PathVariable String id) {
+        Article article;
+        if (id.matches("^\\d+$")) {
+            //ID
+            article = articleService.get(Long.parseLong(id));
+        }else{
+            //code
+            String language = TraceContextHolder.getLanguage();
+            article = articleService.getByCode(id, language);
+            addData("code", id);
+        }
+
+        if (article == null) {
             throw new Http404Exception("文章不存在！");
         }
         addData("article", article);

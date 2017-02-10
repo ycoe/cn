@@ -25,9 +25,27 @@
                     <div class="smart-widget-inner">
                         <div class="smart-widget-body">
                             <div class="form-group">
+                                <label class="col-lg-2 control-label">Code：</label>
+                                <div class="col-lg-10">
+                                    <input name="code" class="form-control" value="${product???string(product.code!, '')}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-lg-2 control-label"><span class="required">*</span> 名称：</label>
                                 <div class="col-lg-10">
                                     <input type="text" class="form-control" name="name" data-parsley-required="true" value="${product???string(product.name, '')}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">编号：</label>
+                                <div class="col-lg-10">
+                                    <input name="num" class="form-control" value="${product???string(product.num!, '')}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">规格：</label>
+                                <div class="col-lg-10">
+                                    <input name="spec" class="form-control" value="${product???string(product.spec!, '')}" />
                                 </div>
                             </div>
                             <div class="form-group">

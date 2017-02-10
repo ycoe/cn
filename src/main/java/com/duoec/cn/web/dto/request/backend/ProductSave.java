@@ -17,6 +17,21 @@ public class ProductSave {
     private String name;
 
     /**
+     * 代码
+     */
+    private String code;
+
+    /**
+     * 编号
+     */
+    private String num;
+
+    /**
+     * 规格
+     */
+    private String spec;
+
+    /**
      * 概要，主要用于首页展示
      */
     private String summary;
@@ -60,6 +75,30 @@ public class ProductSave {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
+    }
+
+    public String getSpec() {
+        return spec;
+    }
+
+    public void setSpec(String spec) {
+        this.spec = spec;
     }
 
     public String getSummary() {

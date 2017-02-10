@@ -1,48 +1,37 @@
+<#if code??>
+    <#assign pageName=code />
+<#else>
+    <#assign pageName="article" />
+</#if>
+
 <@content name="head">
-    <title>${'title'?i18n}</title>
-    <meta name="description" content="${description!}" />
-    <meta name="keywords" content="${keywords!}" />
+<title>${'title'?i18n}</title>
+<meta name="description" content="${description!}" />
+<meta name="keywords" content="${keywords!}" />
 </@content>
 <@content name="body">
     <@slider$ tpl="slider" />
-    <div class="wrap_1000 m-b-50" id="about-us">
-        <@article$ code="about_us" tpl="article_index"/>
+<div class="wrap_1000" id="content-body">
+    <div class="left_nav">
+        <@cateList$ type="news" tpl="cateList" selected="${query???string(query.parentId, '-1')}" />
     </div>
-    <div class="full-wrap p-t-30" id="product-list">
-        <div class="wrap_1000">
-            <@productList$ tpl="productList-index" flag="Index" size="2" />
+    <div class="main_content">
+        <h1>${article.title}</h1>
+        <div class="news-info">
+            ${article.updateTime?number_to_date?string("yyyy年M月d日")}
+            <#if article.parentIds??>
+                <#list article.parentIds as cateId>
+                    <a href="/article/list-${cateId}.html">${cateId?string?cate_name("")}</a>
+                    <#sep>, </#sep>
+                </#list>
+            </#if>
         </div>
+        <#if article.summary??>
+            <div class="news-summary">${article.summary}</div>
+        </#if>
+        <div class="news-con">${article.content}</div>
     </div>
-    <div class="wrap_1000" id="news-list">
-        <@articleList$ tpl="articleList-index" size="3" flag="Index" />
-    </div>
+</div>
 
-    <div class="full-wrap p-t-20" id="contact-us">
-        <h3 class="m-b-30 m-t-20">
-            CONTACT US<br>
-            联系我们
-        </h3>
-        <p>
-            ${'any_help'?i18n}
-        </p>
-        <p class="contact-us-400">${'phont_400'?i18n}</p>
-        <div class="wrap_1000" id="contact-us-list">
-            <ul>
-                <li>
-                    <img src="${assetsUrl}/img/qq.png" alt="">
-                    ${'qq'?i18n}
-                </li>
-                <li>
-                    <img src="${assetsUrl}/img/wechat.png" alt="">
-                    ${'wechat'?i18n}
-                </li>
-                <li>
-                    <img src="${assetsUrl}/img/weibo.png" alt="">
-                    ${'weibo'?i18n}
-                </li>
-            </ul>
-        </div>
-        <img src="${assetsUrl}/img/qr.jpg" />
-    </div>
 </@content>
 <@parent path="/web/common/html.ftl" />

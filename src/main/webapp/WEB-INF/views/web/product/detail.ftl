@@ -23,7 +23,7 @@
                     <label>分类：</label>
                     <span>
                         <#list product.parentIds as cateId>
-                            <a href="/product/list-${cateId}.html">${cateId?string?cateName("")}</a>
+                            <a href="/product/list-${cateId}.html">${cateId?string?cate_name("")}</a>
                             <#sep>, </#sep>
                         </#list>
                     </span>

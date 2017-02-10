@@ -49,7 +49,10 @@ public class ArticleServiceImpl implements ArticleService {
             match.put("title", new Document("$regex", query.getKeyword()));
         }
         if (query.getParentId() != -1) {
-            match.put("parentId", query.getParentId());
+            match.put("parentIds", query.getParentId());
+        }
+        if (!Strings.isNullOrEmpty(query.getLang())) {
+            match.put("language", query.getLang());
         }
         return articleDao.findEntitiesWithTotal(match, Sorts.descending("updateTime"), (pageNo - 1) * pageSize, pageSize);
     }
@@ -118,7 +121,6 @@ public class ArticleServiceImpl implements ArticleService {
         long articleId = request.getId();
         String code = request.getCode();
         if (!Strings.isNullOrEmpty(code)) {
-
             //检查合法性
             if (!CODE_PATTERN.matcher(code).find()) {
                 return "code必须以字母、或下划线开头，包含数字、字母或下划线";

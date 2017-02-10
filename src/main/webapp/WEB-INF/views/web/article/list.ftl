@@ -1,4 +1,4 @@
-<#assign pageName="product" />
+<#assign pageName="article" />
 <@content name="head">
     <title>${'title'?i18n}</title>
     <meta name="description" content="${description!}" />
@@ -12,12 +12,16 @@
         </div>
         <div class="main_content">
             <#if list??>
-            <ul>
+            <ul id="article-ls">
                 <#list list as article>
-                 <li>
-                     <a href="/article/${article.id}.html"><img src="${article.coverImage?thumb(100, 100)}" /></a>
-                     <a href="/article/${article.id}.html">${article.title}</a>
-                     <p>${article.summary}</p>
+                 <li class="item ${article.coverImage???string('item-img', '')}">
+                     <#if article.coverImage??>
+                     <a href="/article/${article.id}.html" class="img-link"><img src="${article.coverImage?thumb(100, 100)}" /></a>
+                     </#if>
+                     <div class="news-cont">
+                         <h3><a href="/article/${article.id}.html">${article.title}</a></h3>
+                         <div class="summary">${article.summary}</div>
+                     </div>
                  </li>
                 </#list>
             </ul>

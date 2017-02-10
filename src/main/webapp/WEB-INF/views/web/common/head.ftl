@@ -12,7 +12,7 @@
 <div class="full-wrap" id="head-nav">
     <div class="wrap_1000">
         <a ${(pageName=='index')?string('class="active"', '')} href="/">${'nav_index'?i18n}</a>
-        <a ${(pageName=='aboutUs')?string('class="active"', '')} href="/article/about_us.html">${'nav_about_us'?i18n}</a>
+        <a ${(pageName=='about_us')?string('class="active"', '')} href="/article/about_us.html">${'nav_about_us'?i18n}</a>
         <a ${(pageName=='product')?string('class="active"', '')} href="/product/">${'nav_products'?i18n}</a>
         <a ${(pageName=='article')?string('class="active"', '')} href="/article/">${'nav_news'?i18n}</a>
         <a ${(pageName=='contact')?string('class="active"', '')} href="/article/contact.html">${'nav_contact_us'?i18n}</a>

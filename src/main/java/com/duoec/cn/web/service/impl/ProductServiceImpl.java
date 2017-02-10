@@ -21,12 +21,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by ycoe on 17/1/14.
  */
 @Service
 public class ProductServiceImpl implements ProductService {
+    private static final Pattern CODE_PATTERN = Pattern.compile("^[\\w|_][\\w|_|\\d]+$");
+
     @Autowired
     private ProductDao productDao;
 
@@ -101,6 +104,22 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
+        Product product = new Product();
+        product.setLanguage(language.getId());
+
+        String checkCodeResult = checkCode(request, product);
+        if (checkCodeResult != null) {
+            return checkCodeResult;
+        }
+
+        if(!Strings.isNullOrEmpty(request.getNum())) {
+            product.setNum(request.getNum());
+        }
+
+        if(!Strings.isNullOrEmpty(request.getSpec())) {
+            product.setSpec(request.getSpec());
+        }
+
         String cateIds = request.getCateIds();
         List<Long> cateIdList;
         try {
@@ -109,13 +128,11 @@ public class ProductServiceImpl implements ProductService {
             return e.getMessage();
         }
 
-        Product product = new Product();
         if (!Strings.isNullOrEmpty(request.getSummary())) {
             product.setSummary(request.getSummary());
         }
 
         product.setName(request.getName());
-        product.setLanguage(language.getId());
         if (!cateIdList.isEmpty()) {
             product.setParentIds(cateIdList);
         }
@@ -144,6 +161,31 @@ public class ProductServiceImpl implements ProductService {
             productDao.insertOne(product);
         }
 
+        return null;
+    }
+
+    private String checkCode(ProductSave request, Product product) {
+        long productId = request.getId();
+        String code = request.getCode();
+        if (!Strings.isNullOrEmpty(code)) {
+            //检查合法性
+            if (!CODE_PATTERN.matcher(code).find()) {
+                return "code必须以字母、或下划线开头，包含数字、字母或下划线";
+            }
+
+            //尝试检查是否唯一
+            Document codeQuery = new Document("code", code)
+                    .append("language", product.getLanguage());
+
+            if (productId > 0) {
+                //如果是修改的，则先排除自己
+                codeQuery.put("_id", new Document("$ne", productId));
+            }
+            if (productDao.exists(codeQuery)) {
+                return "语言：" + product.getLanguage() + ", code: " + code + "已经存在！";
+            }
+            product.setCode(code);
+        }
         return null;
     }
 

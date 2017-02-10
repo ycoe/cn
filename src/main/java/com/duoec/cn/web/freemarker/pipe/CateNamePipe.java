@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by ycoe on 16/5/9.
  */
-@Pipe("cateName")
+@Pipe("cate_name")
 public class CateNamePipe extends BasePipe {
     @Autowired
     CategoryTreeInit categoryTreeInit;
