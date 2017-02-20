@@ -177,6 +177,9 @@ public class ArticleServiceImpl implements ArticleService {
         if (query.getFlag() != null) {
             match.put("flags", query.getFlag().name());
         }
+        if (!Strings.isNullOrEmpty(query.getLang())) {
+            match.put("language", query.getLang());
+        }
         return articleDao.findEntities(match, Sorts.descending("updateTime"), (pageNo - 1) * pageSize, pageSize);
     }
 }

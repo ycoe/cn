@@ -12,7 +12,7 @@
             ${product.summary!}
             </p>
         </div>
-        <img src="${product.coverImage}" alt="${product.name}"/>
+        <img src="${product.coverImage?thumb(294, 263)}" alt="${product.name}"/>
     </li>
     </#list>
 </ul>

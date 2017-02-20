@@ -10,7 +10,11 @@ public class NumberUtils {
         if (Strings.isNullOrEmpty(str)) {
             return false;
         } else {
-            for (int i = 0; i < str.length(); ++i) {
+            int startIndex = 0;
+            if(str.charAt(0) == '-') {
+                startIndex = 1;
+            }
+            for (int i = startIndex; i < str.length(); ++i) {
                 if (!Character.isDigit(str.charAt(i))) {
                     return false;
                 }

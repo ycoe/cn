@@ -42,6 +42,7 @@ $(function () {
             //单选
             selector.find('.selector-text').text(text);
             selector.find('input').val(value);
+            console.log(value)
         }
     });
 });

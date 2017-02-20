@@ -6,4 +6,4 @@
     ${article.content!}
     <a class="more" href="/article/list-10.html">${'more'?i18n} &gt;</a>
 </div>
-<img src="${article.coverImage!}" alt="${article.title!}">
+<img src="${article.coverImage?thumb(474, 256)!}" alt="${article.title!}">

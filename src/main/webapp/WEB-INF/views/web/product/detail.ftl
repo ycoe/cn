@@ -29,6 +29,18 @@
                     </span>
                 </div>
                 </#if>
+                <#if product.spec??>
+                <div class="row">
+                    <label>规格：</label>
+                    <span>${product.spec}</span>
+                    </div>
+                </#if>
+                <#if product.num??>
+                    <div class="row">
+                        <label>编码：</label>
+                        <span>${product.num}</span>
+                    </div>
+                </#if>
             </div>
         </div>
         <div class="product_detail">${product.content}</div>

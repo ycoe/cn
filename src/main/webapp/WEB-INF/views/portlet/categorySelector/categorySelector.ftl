@@ -22,8 +22,8 @@
         <span class="sr-only">Toggle Dropdown</span>
     </button>
     <ul class="dropdown-menu" role="menu">
-        <li data-value="" class="default-item disabled"><a href="javascript:;">${defaultText!}</a></li>
+        <li data-value="${defaultValue!}" class="default-item ${(multi==1)?string('disabled', '')}"><a href="javascript:;">${defaultText!}</a></li>
         <@loopCateList categoryList=categoryList level=0/>
     </ul>
-    <input type="hidden" name="${formName!}" value="${selectedMap???string(selectedMap?keys?join(','), defaultValue)}">
+    <input type="hidden" name="${formName!}" value="${(selectedMap?? && selectedMap?size > 0)?string(selectedMap?keys?join(','), defaultValue)}">
 </div>

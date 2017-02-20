@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Created by ycoe on 17/1/14.
  */
@@ -43,6 +46,7 @@ public class ProductBackendController extends BackendController {
         Pagination<Product> pagination = productService.list(query, pageNo, pageSize);
         addData("total", pagination.getTotal());
         addData("list", pagination.getList());
+        addData("query", query);
         return view("/backend/product/list.ftl");
     }
 
@@ -53,7 +57,6 @@ public class ProductBackendController extends BackendController {
             Product product = productService.get(id);
             addData("product", product);
         }
-        addData("PRODUCT_TYPE", CategoryTypeEnum.PRODUCT);
         addData("ProductFlagEnums", ProductFlagEnum.values());
         return view("/backend/product/edit.ftl");
     }
@@ -67,5 +70,11 @@ public class ProductBackendController extends BackendController {
         } else {
             return success();
         }
+    }
+
+    @Override
+    public void preHandle(HttpServletRequest request, HttpServletResponse response) {
+        super.preHandle(request, response);
+        addData("PRODUCT_TYPE", CategoryTypeEnum.PRODUCT);
     }
 }

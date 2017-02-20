@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Created by ycoe on 17/1/14.
  */
@@ -38,11 +41,12 @@ public class ArticleBackendController extends BackendController {
     ) {
         if (Strings.isNullOrEmpty(query.getLang())) {
             //如果没有指定语言时，使用默认语言
-            query.setLang(CommonConst.DEFAULT_LANGUAGE.getId());
+//            query.setLang(CommonConst.DEFAULT_LANGUAGE.getId());
         }
         Pagination<Article> pagination = articleService.list(query, pageNo, pageSize);
         addData("total", pagination.getTotal());
         addData("list", pagination.getList());
+        addData("query", query);
         return view("/backend/article/list.ftl");
     }
 
@@ -53,7 +57,6 @@ public class ArticleBackendController extends BackendController {
             Article article = articleService.get(id);
             addData("article", article);
         }
-        addData("ARTICLE_TYPE", CategoryTypeEnum.NEWS);
         addData("ArticleFlagEnums", ArticleFlagEnum.values());
         return view("/backend/article/edit.ftl");
     }
@@ -67,5 +70,11 @@ public class ArticleBackendController extends BackendController {
         } else {
             return success();
         }
+    }
+
+    @Override
+    public void preHandle(HttpServletRequest request, HttpServletResponse response) {
+        super.preHandle(request, response);
+        addData("ARTICLE_TYPE", CategoryTypeEnum.NEWS);
     }
 }
