@@ -51,9 +51,9 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">类型：</label>
                             <div class="col-lg-10">
-                                <select class="form-control" name="type">
+                                <select class="form-control disabled" name="type">
                                     <#list categoryTypeEnums as cateType>
-                                    <option value="${cateType.type}" ${(category?? && category.type == cateType.type)?string('selected="selected"', '')}>${cateType.typeName}</option>
+                                    <option class="" value="${cateType.type}" ${(category?? && category.type == cateType.type)?string('selected="selected"', '')}>${cateType.typeName}</option>
                                     </#list>
                                 </select>
                             </div>

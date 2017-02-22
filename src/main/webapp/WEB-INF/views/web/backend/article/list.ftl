@@ -45,6 +45,7 @@
     <tr>
         <th>Code</th>
         <th>标题</th>
+        <th>分类</th>
         <th>更新时间</th>
         <th>状态</th>
         <th>语言</th>
@@ -54,8 +55,20 @@
     <tbody>
         <#list list as item>
         <tr>
-            <td>${item.code!}</td>
-            <td>${item.title}</td>
+            <td>
+                <#if item.code??>
+                    <a href="/article/${item.code}.html?language=${item.language}" target="_blank">${item.code}</a>
+                </#if>
+            </td>
+            <td><a href="/article/${item.id}.html?language=${item.language}" target="_blank">${item.title}</a></td>
+            <td>
+                <#if item.parentIds??>
+                    <#list item.parentIds as cateId>
+                        <a href="/manager/article/list.html?parentId=${cateId}">${cateId?string?cate_name("")}</a>
+                        <#sep>, </#sep>
+                    </#list>
+                </#if>
+            </td>
             <td>${item.updateTime?number_to_date}</td>
             <td><i class="fa ${(item.status != -1)?string('fa-check-square-o', 'fa-child')} m-right-xs"></i></td>
             <td>${item.language}</td>

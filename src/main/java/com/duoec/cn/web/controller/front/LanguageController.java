@@ -16,28 +16,40 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by ycoe on 17/1/10.
  */
 @Controller
 @RequestMapping("/language")
-public class LanguageController extends BaseController{
+public class LanguageController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(LanguageController.class);
+
+    private static final Pattern LANGUAGE_PARAMS_PATTERN = Pattern.compile("language=\\w+");
     @Autowired
     LanguageInit languageInit;
 
     @RequestMapping("/{langId}")
     public ModelAndView setLanguage(@PathVariable String langId, HttpServletRequest request, HttpServletResponse response) {
         String referer = request.getHeader("Referer");
-        if(Strings.isNullOrEmpty(referer)) {
+        if (Strings.isNullOrEmpty(referer)) {
             referer = "/";
+        } else {
+            Matcher matcher = LANGUAGE_PARAMS_PATTERN.matcher(referer);
+            if (matcher.find()) {
+                referer = matcher.replaceFirst("");
+                if (referer.endsWith("?")) {
+                    referer = referer.substring(0, referer.length() - 1);
+                }
+            }
         }
         Language lang = languageInit.get(langId);
 
-        if(lang == null) {
+        if (lang == null) {
             logger.error("语言[{}]不存在！", langId);
-        }else {
+        } else {
             CookieUtils.setCookie(response, CommonConst.LANGUAGE_KEY, lang.getId());
         }
         return redirect(referer);

@@ -39,16 +39,17 @@
             </a>
             <ul class="submenu bg-palette4">
                 <li><a href="/manager/category/product/list.html"><span class="submenu-label">产品分类管理</span></a></li>
-                <li class="openable">
-                    <a href="#">
-                        <small class="badge badge-success badge-square bounceIn animation-delay2 m-left-xs pull-right">2</small>
-                        <span class="submenu-label">产品管理</span>
-                    </a>
-                    <ul class="submenu third-level">
-                        <li><a href="/manager/product/list.html"><span class="submenu-label">产品列表</span></a></li>
-                        <li><a href="/manager/product/edit.html"><span class="submenu-label">添加产品</span></a></li>
-                    </ul>
-                </li>
+                <li><a href="/manager/product/list.html"><span class="submenu-label">产品管理</span></a></li>
+                <#--<li class="openable">-->
+                    <#--<a href="#">-->
+                        <#--<small class="badge badge-success badge-square bounceIn animation-delay2 m-left-xs pull-right">2</small>-->
+                        <#--<span class="submenu-label">产品管理</span>-->
+                    <#--</a>-->
+                    <#--<ul class="submenu third-level">-->
+                        <#--<li><a href="/manager/product/list.html"><span class="submenu-label">产品列表</span></a></li>-->
+                        <#--<li><a href="/manager/product/edit.html"><span class="submenu-label">添加产品</span></a></li>-->
+                    <#--</ul>-->
+                <#--</li>-->
             </ul>
         </li>
         <li class="openable bg-palette4">
@@ -62,16 +63,7 @@
             </a>
             <ul class="submenu">
                 <li><a href="/manager/category/news/list.html"><span class="submenu-label">文章分类管理</span></a></li>
-                <li class="openable">
-                    <a href="#">
-                        <small class="badge badge-success badge-square bounceIn animation-delay2 m-left-xs pull-right">2</small>
-                        <span class="submenu-label">文章管理</span>
-                    </a>
-                    <ul class="submenu third-level">
-                        <li><a href="/manager/article/list.html"><span class="submenu-label">文章列表</span></a></li>
-                        <li><a href="/manager/article/edit.html"><span class="submenu-label">添加文章</span></a></li>
-                    </ul>
-                </li>
+                <li><a href="/manager/article/list.html"><span class="submenu-label">文章管理</span></a></li>
             </ul>
         </li>
     </ul>

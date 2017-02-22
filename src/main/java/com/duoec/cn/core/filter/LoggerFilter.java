@@ -49,9 +49,9 @@ public class LoggerFilter implements Filter {
         String requestUri = httpServletRequest.getRequestURI();
 
         int index = requestUri.lastIndexOf(".");
-        if(index > -1) {
+        if (index > -1) {
             String requestType = requestUri.substring(index);
-            if(IGNORE_LOG_REQUEST.contains(requestType)) {
+            if (IGNORE_LOG_REQUEST.contains(requestType)) {
                 doNextFilter(httpServletRequest, bufferedResponse, chain);
                 return;
             }
@@ -140,7 +140,6 @@ public class LoggerFilter implements Filter {
     }
 
 
-
     /**
      * 设置当前语言
      *
@@ -148,7 +147,10 @@ public class LoggerFilter implements Filter {
      * @param response
      */
     private String setLanguage(HttpServletRequest request, HttpServletResponse response) {
-        String language = CookieUtils.getCookie(request, CommonConst.LANGUAGE_KEY);
+        String language = request.getParameter("language");
+        if (Strings.isNullOrEmpty(language)) {
+            language = CookieUtils.getCookie(request, CommonConst.LANGUAGE_KEY);
+        }
         if (Strings.isNullOrEmpty(language)) {
             language = CommonConst.DEFAULT_LANGUAGE.getId();
             CookieUtils.setCookie(response, CommonConst.LANGUAGE_KEY, language);
