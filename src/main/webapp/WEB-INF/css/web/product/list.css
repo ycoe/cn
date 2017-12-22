@@ -11,12 +11,27 @@
     text-align: center;
 }
 
+.main_content > ul > li > .product-name > span{
+    color: #FF6600;
+}
+
 .main_content > ul > li img {
     max-width: 150px;
     max-height: 150px;
+    vertical-align: middle;
 }
 
 .main_content > ul > li a {
     font-size: 14px;
     color: #444;
+}
+
+.img{
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+}
+
+.img > .holder {
+    line-height: 150px;
 }

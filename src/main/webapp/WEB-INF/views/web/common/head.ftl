@@ -16,6 +16,10 @@
         <a ${(pageName=='product')?string('class="active"', '')} href="/product/">${'nav_products'?i18n}</a>
         <a ${(pageName=='article')?string('class="active"', '')} href="/article/">${'nav_news'?i18n}</a>
         <a ${(pageName=='contact')?string('class="active"', '')} href="/article/contact.html">${'nav_contact_us'?i18n}</a>
+        <div class="searcher">
+            <input type="text" name="keyword" placeholder="${'searchTips'?i18n}" value="${query.keyword!}"/>
+            <button id="search-btn">${'search'?i18n}</button>
+        </div>
     </div>
 </div>
 <div id="language">
@@ -23,3 +27,6 @@
     <a href="/language/${lang.id}" class="<#if lang.id == CN_LANGUAGE>active</#if>">${lang.name!}</a>
 </#list>
 </div>
+<script>
+    var KEYWORD = '${query.keyword!}';
+</script>

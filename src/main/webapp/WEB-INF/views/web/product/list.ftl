@@ -5,7 +5,6 @@
     <meta name="keywords" content="${keywords!}" />
 </@content>
 <@content name="body">
-    <@slider$ tpl="slider" />
     <div class="wrap_1000" id="content-body">
         <div class="left_nav">
             <@cateList$ type="product" tpl="cateList" selected="${query???string(query.parentId, '-1')}" />
@@ -14,9 +13,12 @@
             <#if list??>
             <ul>
                 <#list list as product>
-                 <li>
-                     <a href="/product/${product.id}.html"><img src="${product.coverImage?thumb(150, 150)}" /></a>
-                     <a href="/product/${product.id}.html">${product.name}</a>
+                 <li class="">
+                     <a href="/product/${product.id}.html" class="img">
+                         <span class="holder"></span>
+                         <img src="${product.coverImage?thumb2(150, 150)}" />
+                     </a>
+                     <a href="/product/${product.id}.html" class="product-name">${product.name}</a>
                  </li>
                 </#list>
             </ul>

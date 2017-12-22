@@ -19,8 +19,8 @@ public class SliderPortlet extends BaseFuturePortlet {
     @Override
     public void loadData() throws PortletException {
         List<String> images = Lists.newArrayList(
-                qiniuUrl + "/266b5c095da077819eeaf740b548bacf.jpeg",
-                qiniuUrl + "/a0d06bb8de48124cca0bfd56aa4e32f8.jpeg"
+                qiniuUrl + "/cn/1.jpg",
+                qiniuUrl + "/cn/3.jpg"
         );
         addData("images", images);
     }

@@ -1,84 +1,96 @@
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, menu, nav, section {
     margin: 0;
     padding: 0;
-    font: 12px/1.5 "\5FAE\8F6F\96C5\9ED1",Helvetica,"黑体",Arial,Tahoma;
+    font: 12px/1.5 "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma;
     color: rgb(89, 89, 89);
 }
-a{
+
+a {
     text-decoration: none;
 }
-li{
+
+li {
     margin: 0;
     padding: 0;
     list-style-type: none;
 }
-.wrap_1000{
+
+.wrap_1000 {
     width: 1000px;
     margin: 0 auto;
 }
-.full-wrap{
+
+.full-wrap {
     width: 100%;
 }
 
-.icon{
+.icon {
     display: inline-block;
     vertical-align: middle;
 }
-.icon.icon-400{
+
+.icon.icon-400 {
     background: url("/assets/img/phone.png");
     width: 32px;
     height: 32px;
 }
-.m-b-10{
+
+.m-b-10 {
     margin-bottom: 10px;
 }
-.m-b-30{
+
+.m-b-30 {
     margin-bottom: 30px;
 }
-.m-b-50{
+
+.m-b-50 {
     margin-bottom: 50px;
 }
 
-.m-t-30{
+.m-t-30 {
     margin-top: 30px;
 }
 
-.p-t-10{
+.p-t-10 {
     padding-top: 10px;
 }
 
-.p-t-20{
+.p-t-20 {
     padding-top: 20px;
 }
 
-.p-t-30{
+.p-t-30 {
     padding-top: 30px;
 }
 
 /**
  * ------------以下头部Logo样式------------
  */
-#header{
+#header {
     margin-top: 10px;
     position: relative;
     height: 70px;
 }
-#header>.logo{
+
+#header > .logo {
     color: #AAA;
 }
-#header>.logo>strong{
+
+#header > .logo > strong {
     line-height: 28px;
     font-size: 18px;
     display: inherit;
     color: rgb(89, 89, 89);
 }
-#logo-img{
+
+#logo-img {
     padding-right: 20px;
     border-right: 1px solid #999;
     float: left;
     margin-right: 20px;
 }
-#header>.head-400{
+
+#header > .head-400 {
     position: absolute;
     top: 10px;
     right: 100px;
@@ -88,11 +100,16 @@ li{
 /**
  * ------------以下头部导航样式------------
  */
-#head-nav{
+#head-nav {
     border-top: 1px solid #CCC;
     padding: 10px 0;
 }
-#head-nav a{
+
+#head-nav > .wrap_1000 {
+    position: relative;
+}
+
+#head-nav a {
     line-height: 57px;
     display: inline-block;
     color: #444;
@@ -100,38 +117,65 @@ li{
     padding: 0 30px;
     text-decoration: none;
 }
-#head-nav a:hover{
-    background:#55A8D8;
+
+#head-nav a:hover {
+    background: #55A8D8;
     color: #f5f5f5;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
-#head-nav a.active{
+
+#head-nav a.active {
     background: #008CDE;
     color: #f5f5f5;
 }
 
-#footer{
+#footer {
     text-align: center;
     line-height: 40px;
 }
 
-#language{
+#language {
     position: fixed;
     right: 60px;
     top: 62px;
     z-index: 999999999;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
-#language>a{
+
+#language > a {
     display: inline-block;
     padding: 8px 5px;
     background-color: white;
 }
-#language>a.active{
+
+#language > a.active {
     background-color: #29A0CB;
     color: white;
 }
 
+.searcher {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.searcher input {
+    line-height: 36px;
+    font-size: 16px;
+    width: 200px;
+    padding: 0 10px;
+    height: 36px;
+}
+
+.searcher button {
+    line-height: 40px;
+    height: 40px;
+    padding: 0 10px;
+    background: #008CDE;
+    color: white;
+    font-size: 16px;
+    border: 0;
+}
 
 /** 列表页公共样式 **/
 #content-body {

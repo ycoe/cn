@@ -16,6 +16,7 @@
         <#include "/web/common/head.ftl" />
         <@layout name="body" />
         <#include "/web/common/foot.ftl" />
+        <@js src="${assetsUrl}/js/common.js"/>
         <@js />
     </body>
 </html>

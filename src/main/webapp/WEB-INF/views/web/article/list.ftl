@@ -5,7 +5,6 @@
     <meta name="keywords" content="${keywords!}" />
 </@content>
 <@content name="body">
-    <@slider$ tpl="slider" />
     <div class="wrap_1000" id="content-body">
         <div class="left_nav">
             <@cateList$ type="news" tpl="cateList" selected="${query???string(query.parentId, '-1')}" />

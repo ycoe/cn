@@ -27,18 +27,22 @@ public class ProductController extends BaseController {
 
     @RequestMapping("/")
     public ModelAndView list(
-            @RequestParam(required = false, defaultValue = "1") int pageNo
+            @RequestParam(required = false, defaultValue = "1") int pageNo,
+            @RequestParam(required = false) String keyword
     ){
         ProductQuery query = new ProductQuery();
+        query.setKeyword(keyword);
         return listView(query, pageNo);
     }
 
     @RequestMapping("/list-{cateId:\\d+}.html")
     public ModelAndView listWithPage(
             @PathVariable long cateId,
-            @RequestParam(required = false, defaultValue = "1") int pageNo
+            @RequestParam(required = false, defaultValue = "1") int pageNo,
+            @RequestParam(required = false) String keyword
     ) {
         ProductQuery query = new ProductQuery();
+        query.setKeyword(keyword);
         query.setParentId(cateId);
         return listView(query, pageNo);
     }
