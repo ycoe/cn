@@ -9,12 +9,16 @@
 
 .product_info > .product_attrs {
     float: right;
+    flex: 1;
+    -webkit-flex: 1;
+    width: 356px;
 }
 
 .product_info > .product_attrs > h1 {
     font-size: 18px;
     font-weight: bold;
-    line-height: 50px;
+    line-height: 30px;
+    margin-top: 10px;
 }
 
 .product_info > .product_attrs > .summary {
@@ -40,6 +44,7 @@
     margin: 20px 0;
     font-size: 16px;
     line-height: 32px;
+    width: 100%;
 }
 
 .product_detail p {
@@ -47,6 +52,14 @@
     line-height: 32px;
     text-indent: 24px;
 
+}
+.product_detail h5{
+    font-size: 18px;
+    font-weight: bold;
+    background: #EEE;
+    text-indent: 20px;
+    line-height: 50px;
+    margin-bottom: 12px;
 }
 
 .img {

@@ -17,6 +17,7 @@ import com.google.common.collect.Lists;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +43,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Pagination<Product> list(ProductQuery query, int pageNo, int pageSize) {
         Document match = getFilters(query);
-        return productDao.findEntitiesWithTotal(match, Sorts.descending("updateTime"), (pageNo - 1) * pageSize, pageSize);
+
+        Bson sort;
+        if("DESC".equalsIgnoreCase(query.getSortType())) {
+            sort = Sorts.descending(query.getSort());
+        } else {
+            sort = Sorts.ascending(query.getSort());
+        }
+
+        return productDao.findEntitiesWithTotal(match, sort, (pageNo - 1) * pageSize, pageSize);
     }
 
     private Document getFilters(ProductQuery query) {

@@ -59,7 +59,7 @@ public class ThumbPipe extends BasePipe {
             if (index > -1) {
                 url = url.substring(0, index);
             }
-            url += "?imageMogr2/thumbnail/" + thumbWidth + "x" + thumbHeight + "!";
+            url += "?imageMogr2/thumbnail/" + thumbWidth + "x" + thumbHeight + "";
         }
 
         return url;

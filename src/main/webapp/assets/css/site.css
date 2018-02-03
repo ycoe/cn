@@ -78,7 +78,7 @@ li {
 
 #header > .logo > strong {
     line-height: 28px;
-    font-size: 18px;
+    font-size: 30px;
     display: inherit;
     color: rgb(89, 89, 89);
 }
@@ -103,6 +103,8 @@ li {
 #head-nav {
     border-top: 1px solid #CCC;
     padding: 10px 0;
+    background: #EEE;
+
 }
 
 #head-nav > .wrap_1000 {
@@ -135,9 +137,9 @@ li {
 }
 
 #language {
-    position: fixed;
+    position: absolute;
     right: 60px;
-    top: 62px;
+    top: 20px;
     z-index: 999999999;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }

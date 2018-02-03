@@ -6,7 +6,7 @@
     float: left;
     width: 150px;
     margin: 10px;
-    height: 200px;
+    height: 220px;
     overflow: hidden;
     text-align: center;
 }
@@ -34,4 +34,8 @@
 
 .img > .holder {
     line-height: 150px;
+}
+
+[parent-id] > li{
+
 }

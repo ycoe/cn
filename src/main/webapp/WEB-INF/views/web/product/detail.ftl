@@ -21,15 +21,7 @@
                 <div class="summary">${product.summary}</div>
                 </#if>
                 <#if product.parentIds??>
-                <div class="row">
-                    <label>${'cate'?i18n}: </label>
-                    <span>
-                        <#list product.parentIds as cateId>
-                            <a href="/product/list-${cateId}.html">${cateId?string?cate_name("")}</a>
-                            <#sep>, </#sep>
-                        </#list>
-                    </span>
-                </div>
+
                 </#if>
                 <#if product.spec??>
                 <div class="row">
@@ -45,7 +37,10 @@
                 </#if>
             </div>
         </div>
-        <div class="product_detail">${product.content}</div>
+        <div class="product_detail">
+            <h5>${'spec'?i18n}</h5>
+        ${product.content}
+        </div>
     </div>
 </div>
 

@@ -26,6 +26,14 @@
                     <label class="sr-only">产品分类</label>
                     <@categorySelector type="${PRODUCT_TYPE.type}" formName="parentId" multi="0" defaultText="--不限分类--" defaultValue="-1" value="${query.parentId!'-1'}" />
                 </div><!-- /form-group -->
+                <div class="form-group">
+                    <label class="sr-only">标识</label>
+                    <select name="flag" class="form-control">
+                        <option value="">-- 不限制标识 --</option>
+                        <option value="Index" ${(query.flag?? && query.flag == 'Index') ? string('selected= "selected"', '')}>首页显示</option>
+
+                    </select>
+                </div>
                 <div class="checkbox">
                     <label class="sr-only">语言</label>
                     <select class="form-control" name="lang">
@@ -43,7 +51,7 @@
 <table class="table table-striped table-hover" id="dataTable">
     <thead>
     <tr>
-        <th>Code</th>
+        <th>编码</th>
         <th>名称</th>
         <th>分类</th>
         <th>更新时间</th>
@@ -56,8 +64,8 @@
         <#list list as item>
         <tr>
             <td>
-                <#if item.code??>
-                    <a href="/product/${item.code}.html?language=${item.language}" target="_blank">${item.code}</a>
+                <#if item.num??>
+                    <a href="/product/${item.code}.html?language=${item.language}" target="_blank">${item.num}</a>
                 </#if>
             </td>
             <td>

@@ -37,12 +37,14 @@ public class ProductBackendController extends BackendController {
     public ModelAndView list(
             ProductQuery query,
             @RequestParam(required = false, defaultValue = "1") int pageNo,
-            @RequestParam(required = false, defaultValue = "20") int pageSize
+            @RequestParam(required = false, defaultValue = "40") int pageSize
     ) {
         if (Strings.isNullOrEmpty(query.getLang())) {
             //如果没有指定语言时，使用默认语言
 //            query.setLang(CommonConst.DEFAULT_LANGUAGE.getId());
         }
+        query.setSort("num");
+        query.setSortType("ASC");
         Pagination<Product> pagination = productService.list(query, pageNo, pageSize);
         addData("total", pagination.getTotal());
         addData("list", pagination.getList());

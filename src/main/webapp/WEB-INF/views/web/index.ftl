@@ -6,16 +6,13 @@
 </@content>
 <@content name="body">
     <@slider$ tpl="slider" />
-    <div class="wrap_1000 m-b-50" id="about-us">
+<div class="full-wrap p-t-30" id="product-list">
+    <div class="wrap_1000">
+        <@productList$ tpl="productList-index" flag="Index" size="12" />
+    </div>
+</div>
+<div class="wrap_1000 m-b-50" id="about-us">
         <@article$ code="about_us" tpl="article_index"/>
-    </div>
-    <div class="full-wrap p-t-30" id="product-list">
-        <div class="wrap_1000">
-            <@productList$ tpl="productList-index" flag="Index" size="2" />
-        </div>
-    </div>
-    <div class="wrap_1000" id="news-list">
-        <@articleList$ tpl="articleList-index" size="3" flag="Index" />
     </div>
 
     <div class="full-wrap p-t-20" id="contact-us">
@@ -40,6 +37,10 @@
                 <li>
                     <img src="${assetsUrl}/img/weibo.png" alt="">
                     ${'weibo'?i18n}
+                </li>
+                <li>
+                    <img src="${assetsUrl}/img/weibo.png" alt="">
+                ${'weibo'?i18n}
                 </li>
             </ul>
         </div>

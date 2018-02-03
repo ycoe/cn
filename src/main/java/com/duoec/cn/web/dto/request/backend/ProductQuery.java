@@ -31,6 +31,16 @@ public class ProductQuery {
      */
     private String flag;
 
+    /**
+     * 排序字段，默认按更新时间排序
+     */
+    private String sort = "updateTime";
+
+    /**
+     * 排序方式： 逻辑倒序，顺序使用ASC
+     */
+    private String sortType = "DESC";
+
     public String getLang() {
         return lang;
     }
@@ -69,5 +79,21 @@ public class ProductQuery {
 
     public String getFlag() {
         return flag;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+    public String getSortType() {
+        return sortType;
+    }
+
+    public void setSortType(String sortType) {
+        this.sortType = sortType;
     }
 }
