@@ -48,10 +48,17 @@
 }
 
 .box.cateList > ul h3.active {
-    text-indent: 8px;
     border-left: 2px solid rgba(41, 160, 203, 0.3);
     background-color: rgba(41, 160, 203, 0.59);
 }
 
 .box.cateList .gt {
+    font-size: 18px;
+    margin-right: 10px;
+    width: 27px;
+    display: inline-block;
+    height: 27px;
+    text-align: center;
+    text-indent: 0;
+    cursor: pointer;
 }

@@ -32,14 +32,14 @@ public class ProductQuery {
     private String flag;
 
     /**
-     * 排序字段，默认按更新时间排序
+     * 排序字段
      */
-    private String sort = "updateTime";
+    private String sort = "num";
 
     /**
      * 排序方式： 逻辑倒序，顺序使用ASC
      */
-    private String sortType = "DESC";
+    private String sortType = "ASC";
 
     public String getLang() {
         return lang;

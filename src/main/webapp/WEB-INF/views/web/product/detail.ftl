@@ -7,7 +7,7 @@
 <@content name="body">
 <div class="wrap_1000" id="content-body">
     <div class="left_nav">
-        <@cateList$ type="product" tpl="cateList" selected="${query???string(query.parentId, '-1')}" />
+        <@cateList$ type="product" tpl="cateList" selected="${product.parentIds[0]}" />
     </div>
     <div class="main_content">
         <div class="product_info">
