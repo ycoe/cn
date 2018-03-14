@@ -39,8 +39,8 @@
                     ${'weibo'?i18n}
                 </li>
                 <li>
-                    <img src="${assetsUrl}/img/weibo.png" alt="">
-                ${'weibo'?i18n}
+                    <img src="${assetsUrl}/img/whatsapp.png" alt="">
+                ${'whatsapp'?i18n}
                 </li>
             </ul>
         </div>
