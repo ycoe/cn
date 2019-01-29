@@ -60,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
             match.put("status", query.getStatus());
         }
         if (!Strings.isNullOrEmpty(query.getKeyword())) {
-            match.put("name", new Document("$regex", query.getKeyword()));
+            match.put("name", new Document("$regex", query.getKeyword()).append("$options", "-i"));
         }
         if (query.getParentId() != -1) {
             match.put("parentIds", query.getParentId());

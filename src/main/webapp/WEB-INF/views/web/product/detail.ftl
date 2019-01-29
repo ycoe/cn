@@ -11,7 +11,7 @@
     </div>
     <div class="main_content">
         <div class="product_info">
-            <div class="img">
+            <div class="img" id="cover-image">
                 <span class="holder"></span>
                 <img class="cover" src="${product.coverImage?thumb2(300, 300)}" alt="">
             </div>
@@ -43,6 +43,26 @@
         </div>
     </div>
 </div>
+<@js src="${assetsUrl}/js/jquery.zoom.min.js"/>
+<script>
+    var detailPage;
+    (function () {
+        detailPage = {
+            init: function () {
+                console.log(2345);
+                console.log(typeof(jQuery));
+                $('#cover-image').zoom({url: '${product.coverImage}'});
+            }
+        };
 
+        var pageEnv = setInterval(function () {
+            if (typeof(jQuery) !== 'undefined') {
+                clearInterval(pageEnv);
+                detailPage.init();
+            }
+        }, 10);
+    })();
+
+</script>
 </@content>
 <@parent path="/web/common/html.ftl" />
