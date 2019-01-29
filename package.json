@@ -17,7 +17,6 @@
     "gulp-util": "^3.0.7"
   },
   "dependencies": {
-    "antd": "^2.5.2",
     "bootstrap": "^3.3.7",
     "jquery-zoom": "^1.7.21",
     "parsley": "^0.1.0"
