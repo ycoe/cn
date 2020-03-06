@@ -10,7 +10,7 @@
 
 #### 后台页面模板
 
-    http://bootstrap.cn/themes/boot_07_SimplilyAdmin/
+    http://bootstrap.com.duoec.web.cn/themes/boot_07_SimplilyAdmin/
 
 ####  表单验证
 

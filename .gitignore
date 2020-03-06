@@ -50,9 +50,11 @@ logs/
 .idea/
 *.iml
 
-src/main/webapp/assets/static_js/
-src/main/webapp/assets/static_css/
+src/main/resources/static/static_js/
+src/main/resources/static/static_css/
 src/main/webapp/tmp/
 node_modules/
 /target/
 /src/main/webapp/dist/
+cn-web/src/main/resources/static/tmp/
+
