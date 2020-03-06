@@ -1,4 +1,4 @@
-package com.duoec.web.cn;
+package com.duoec.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

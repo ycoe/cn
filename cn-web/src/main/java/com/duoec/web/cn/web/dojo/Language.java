@@ -5,7 +5,7 @@ package com.duoec.web.cn.web.dojo;
  */
 public class Language {
     /**
-     * ID，即语言名称：com.duoec.web.cn / en / ...
+     * ID，即语言名称：cn / en / ...
      */
     private String id;
 

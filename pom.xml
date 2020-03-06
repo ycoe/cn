@@ -11,6 +11,7 @@
         <module>w-api</module>
         <module>cn-web</module>
         <module>base-web</module>
+        <module>starter</module>
     </modules>
     <packaging>pom</packaging>
 

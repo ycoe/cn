@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-com.duoec.web.cn">
+<html lang="zh-cn">
 <head>
     <meta charset="utf-8">
     <title>Simplify Admin</title>
