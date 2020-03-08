@@ -10,6 +10,8 @@ public class CommonWebConst {
      */
     public static final String USER_DATA = "USER_DATA";
 
+    public static final String STR_CONTENT_TYPE = "CN_CT";
+
     public static final String ACCESS_KEY = "CN_ACCESS_KEY";
 
     /**

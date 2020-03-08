@@ -6,15 +6,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by ycoe on 16/5/11.
+ *
+ * @author ycoe
+ * @date 16/5/11
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ViewCache {
     /**
      * 缓存时间(单位:分钟),默认1小时
-     *
-     * @return
      */
     int value() default 60;
 }

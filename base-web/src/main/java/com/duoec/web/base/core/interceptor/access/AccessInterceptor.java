@@ -1,7 +1,9 @@
 package com.duoec.web.base.core.interceptor.access;
 
 import com.duoec.web.base.core.CommonWebConst;
+import com.duoec.web.base.core.interceptor.access.enums.ContentTypeEnum;
 import com.duoec.web.base.core.interceptor.access.enums.RoleEnum;
+import com.duoec.web.base.dto.response.BaseResponse;
 import com.duoec.web.base.exceptions.Http406Exception;
 import com.duoec.web.base.service.SiteService;
 import com.duoec.web.base.utils.UUIDUtils;
@@ -44,6 +46,11 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (handler instanceof ResourceHttpRequestHandler) {
             return true;
+        }
+        Class<?> returnType = ((HandlerMethod) handler).getMethod().getReturnType();
+        if (returnType.isAssignableFrom(BaseResponse.class)) {
+            response.setContentType(ContentTypeEnum.APPLICATION_JSON.getContentType());
+            request.setAttribute(CommonWebConst.STR_CONTENT_TYPE, ContentTypeEnum.APPLICATION_JSON);
         }
         String sid = getSid(request, response);
         request.setAttribute(ssid, sid);
@@ -92,10 +99,6 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
 
     /**
      * 获取用户ID
-     *
-     * @param request
-     * @param response
-     * @return
      */
     private String getSid(HttpServletRequest request, HttpServletResponse response) {
         String sid = siteService.getCookie(CommonWebConst.SSID);
@@ -108,7 +111,6 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
         }
         return sid;
     }
-
 
     private void directLoginPage(HttpServletRequest request) {
         String uri = request.getRequestURI();

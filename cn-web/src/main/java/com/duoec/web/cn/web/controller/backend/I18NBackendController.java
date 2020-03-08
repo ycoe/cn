@@ -1,7 +1,6 @@
 package com.duoec.web.cn.web.controller.backend;
 
 import com.duoec.web.base.core.interceptor.access.Access;
-import com.duoec.web.base.core.interceptor.access.enums.ContentTypeEnum;
 import com.duoec.web.base.core.interceptor.access.enums.RoleEnum;
 import com.duoec.web.cn.web.dojo.I18N;
 import com.duoec.web.cn.web.dto.request.backend.I18NQuery;
@@ -49,7 +48,7 @@ public class I18NBackendController extends BackendController {
         return view("/backend/i18n/edit.ftl");
     }
 
-    @Access(value = RoleEnum.Admin, contentType = ContentTypeEnum.APPLICATION_JSON)
+    @Access(value = RoleEnum.Admin)
     @RequestMapping(method = RequestMethod.POST, value = "/edit.json")
     public ModelAndView save(@RequestBody I18NSave request) {
         String message = i18NService.save(request);

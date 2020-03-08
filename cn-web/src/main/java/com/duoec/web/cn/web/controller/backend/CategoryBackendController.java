@@ -1,9 +1,8 @@
 package com.duoec.web.cn.web.controller.backend;
 
-import com.duoec.web.base.exceptions.Http404Exception;
 import com.duoec.web.base.core.interceptor.access.Access;
-import com.duoec.web.base.core.interceptor.access.enums.ContentTypeEnum;
 import com.duoec.web.base.core.interceptor.access.enums.RoleEnum;
+import com.duoec.web.base.exceptions.Http404Exception;
 import com.duoec.web.cn.enums.CategoryTypeEnum;
 import com.duoec.web.cn.web.dojo.Category;
 import com.duoec.web.cn.web.dto.request.backend.CategoryQuery;
@@ -65,7 +64,7 @@ public class CategoryBackendController extends BackendController {
         return view("/backend/category/edit.ftl");
     }
 
-    @Access(value = RoleEnum.Admin, contentType = ContentTypeEnum.APPLICATION_JSON)
+    @Access(value = RoleEnum.Admin)
     @RequestMapping(method = RequestMethod.POST, value = "/edit.json")
     public ModelAndView save(
             @PathVariable String type,

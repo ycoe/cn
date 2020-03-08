@@ -1,5 +1,6 @@
 package com.duoec.web.cn.core.interceptor;
 
+import com.duoec.web.base.core.CommonWebConst;
 import com.duoec.web.base.core.interceptor.access.enums.ContentTypeEnum;
 import com.duoec.web.cn.core.common.CommonCnConst;
 import com.duoec.web.cn.core.common.utils.NumberUtils;
@@ -33,7 +34,7 @@ import java.util.regex.Pattern;
  */
 public class ViewCacheInterceptor extends HandlerInterceptorAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ViewCacheInterceptor.class);
-    private static final Pattern FILE_PATTERN = Pattern.compile("\\.[^\\.]+$");
+    private static final Pattern FILE_PATTERN = Pattern.compile("\\.[^.]+$");
 
     @Autowired
     private SiteService siteService;
@@ -60,6 +61,11 @@ public class ViewCacheInterceptor extends HandlerInterceptorAdapter {
                 writeResponse(response, content);
                 return false;
             }
+        }
+
+        Object contentType = request.getAttribute(CommonWebConst.STR_CONTENT_TYPE);
+        if (contentType != null && contentType instanceof ContentTypeEnum && ((ContentTypeEnum)contentType) == ContentTypeEnum.APPLICATION_JSON) {
+            return true;
         }
 
         //预处理

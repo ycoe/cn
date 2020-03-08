@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by ycoe on 16/12/27.
+ *
+ * @author ycoe
+ * @date 16/12/27
  */
 @Service
 public class AccountServiceImpl implements AccountService {

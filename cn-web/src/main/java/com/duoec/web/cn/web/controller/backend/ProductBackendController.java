@@ -1,7 +1,6 @@
 package com.duoec.web.cn.web.controller.backend;
 
 import com.duoec.web.base.core.interceptor.access.Access;
-import com.duoec.web.base.core.interceptor.access.enums.ContentTypeEnum;
 import com.duoec.web.base.core.interceptor.access.enums.RoleEnum;
 import com.duoec.web.cn.enums.CategoryTypeEnum;
 import com.duoec.web.cn.enums.ProductFlagEnum;
@@ -62,7 +61,7 @@ public class ProductBackendController extends BackendController {
         return view("/backend/product/edit.ftl");
     }
 
-    @Access(value = RoleEnum.Admin, contentType = ContentTypeEnum.APPLICATION_JSON)
+    @Access(value = RoleEnum.Admin)
     @RequestMapping(method = RequestMethod.POST, value = "/edit.json")
     public ModelAndView save(@RequestBody ProductSave request) {
         String message = productService.save(request);
