@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping
 public class SiteController extends BaseController{
-    @Value("${domain}")
+    @Value("${site.domain}")
     private String domain;
 
     @RequestMapping

@@ -1,6 +1,6 @@
 package com.duoec.web.cn.web.freemarker.portlet;
 
-import com.duoec.web.cn.core.common.utils.UUIDUtils;
+import com.duoec.web.base.utils.UUIDUtils;
 import com.duoec.web.core.freemarker.PortletException;
 import com.duoec.web.core.freemarker.portlet.BaseFuturePortlet;
 import com.duoec.web.core.freemarker.portlet.Portlet;

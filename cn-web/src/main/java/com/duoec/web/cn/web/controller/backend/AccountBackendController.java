@@ -1,6 +1,6 @@
 package com.duoec.web.cn.web.controller.backend;
 
-import com.duoec.web.cn.core.common.CommonConst;
+import com.duoec.web.base.core.CommonWebConst;
 import com.duoec.web.cn.web.dto.request.LoginRequest;
 import com.duoec.web.cn.web.dto.response.LoginResp;
 import com.duoec.web.cn.web.service.AccountService;
@@ -31,7 +31,7 @@ public class AccountBackendController extends BackendController{
 
     @PostMapping("/login.html")
     public ModelAndView postLogin(LoginRequest loginRequest, HttpServletRequest request){
-        String sid = (String) request.getAttribute(CommonConst.SSID);
+        String sid = (String) request.getAttribute(CommonWebConst.SSID);
         loginRequest.setSid(sid);
 
         LoginResp resp = accountService.login(loginRequest);
@@ -51,7 +51,7 @@ public class AccountBackendController extends BackendController{
 
     @RequestMapping("/logout.html")
     public ModelAndView logout(HttpServletRequest request){
-        String sid = (String) request.getAttribute(CommonConst.SSID);
+        String sid = (String) request.getAttribute(CommonWebConst.SSID);
         accountService.logout(sid);
         return redirect("/manager/login.html");
     }

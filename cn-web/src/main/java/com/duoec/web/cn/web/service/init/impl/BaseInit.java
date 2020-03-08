@@ -1,9 +1,11 @@
 package com.duoec.web.cn.web.service.init.impl;
 
-import com.duoec.web.cn.core.common.CommonConst;
+import com.duoec.web.base.core.AsyncExecutor;
+import com.duoec.web.cn.core.common.CommonCnConst;
 import com.duoec.web.cn.web.service.init.InitJob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 
@@ -12,6 +14,9 @@ import javax.annotation.PostConstruct;
  */
 public abstract class BaseInit implements InitJob {
     private static final Logger logger = LoggerFactory.getLogger(BaseInit.class);
+
+    @Autowired
+    protected AsyncExecutor asyncExecutor;
 
     /**
      * 是否加载完成
@@ -22,9 +27,9 @@ public abstract class BaseInit implements InitJob {
     @Override
     public void init() {
         final Class jobClass = this.getClass();
-        CommonConst.EXECUTOR_SERVICE.execute(() -> {
+        asyncExecutor.getAsyncExecutor().execute(() -> {
             while (!isReady()) {
-                CommonConst.sleep(10);
+                CommonCnConst.sleep(10);
             }
             long t1 = System.currentTimeMillis();
             loadFinish = false;

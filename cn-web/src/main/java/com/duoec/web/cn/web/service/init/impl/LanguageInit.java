@@ -1,6 +1,6 @@
 package com.duoec.web.cn.web.service.init.impl;
 
-import com.duoec.web.cn.core.common.CommonConst;
+import com.duoec.web.cn.core.common.CommonCnConst;
 import com.duoec.web.cn.web.dao.LanguageDao;
 import com.duoec.web.cn.web.dojo.Language;
 import com.google.common.collect.Lists;
@@ -57,16 +57,16 @@ public class LanguageInit extends BaseUpdatedInit {
         //排序需要先删除后添加!
         languageDao.findEntities(query, null, null, null).forEach(this::setLanguage);
 
-        if (CommonConst.DEFAULT_LANGUAGE == null) {
+        if (CommonCnConst.DEFAULT_LANGUAGE == null) {
             if (LANGUAGES.size() == 0) {
                 //未指定语言
                 Language language = getDefaultLanguage();
-                CommonConst.DEFAULT_LANGUAGE = language;
+                CommonCnConst.DEFAULT_LANGUAGE = language;
                 LANGUAGES.put(language.getId(), language);
                 languageDao.insertOne(language);
             } else {
                 for (Map.Entry<String, Language> entry : LANGUAGES.entrySet()) {
-                    CommonConst.DEFAULT_LANGUAGE = entry.getValue();
+                    CommonCnConst.DEFAULT_LANGUAGE = entry.getValue();
                     break;
                 }
             }
@@ -95,7 +95,7 @@ public class LanguageInit extends BaseUpdatedInit {
         }
         if (language.getStatus() == 1) {
             //默认语言
-            CommonConst.DEFAULT_LANGUAGE = language;
+            CommonCnConst.DEFAULT_LANGUAGE = language;
         }
     }
 
@@ -111,7 +111,7 @@ public class LanguageInit extends BaseUpdatedInit {
     }
 
     public String setDefault(String languageId) {
-        if(CommonConst.DEFAULT_LANGUAGE.getId().equals(languageId)) {
+        if(CommonCnConst.DEFAULT_LANGUAGE.getId().equals(languageId)) {
             return languageId + "已经是默认语言！";
         }
         Language language = get(languageId);
@@ -119,13 +119,13 @@ public class LanguageInit extends BaseUpdatedInit {
             return "无效语言：" + languageId;
         }
         language.setStatus(1);
-        CommonConst.DEFAULT_LANGUAGE.setStatus(0);
+        CommonCnConst.DEFAULT_LANGUAGE.setStatus(0);
 
         //设置为默认语言
-        languageDao.updateEntity(CommonConst.DEFAULT_LANGUAGE);
+        languageDao.updateEntity(CommonCnConst.DEFAULT_LANGUAGE);
         languageDao.updateEntity(language);
 
-        CommonConst.DEFAULT_LANGUAGE = language;
+        CommonCnConst.DEFAULT_LANGUAGE = language;
         return null;
     }
 }

@@ -50,8 +50,8 @@ logs/
 .idea/
 *.iml
 
-src/main/resources/static/static_js/
-src/main/resources/static/static_css/
+cn-web/src/main/resources/static/static_css
+cn-web/src/main/resources/static/static_js
 src/main/webapp/tmp/
 node_modules/
 /target/

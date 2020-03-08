@@ -1,6 +1,6 @@
 package com.duoec.web.cn.web.service.init.impl;
 
-import com.duoec.web.cn.core.common.CommonConst;
+import com.duoec.web.cn.core.common.CommonCnConst;
 
 /**
  * Created by ycoe on 16/11/1.
@@ -34,7 +34,7 @@ public abstract class BaseUpdatedInit extends BaseInit {
 
         stopUpdate = false;
         //开启词库更新检查
-        CommonConst.EXECUTOR_SERVICE.execute(() -> checkUpdate());
+        asyncExecutor.getAsyncExecutor().execute(() -> checkUpdate());
     }
 
     private void checkUpdate() {
@@ -44,7 +44,7 @@ public abstract class BaseUpdatedInit extends BaseInit {
             }
 
             //10秒检查一次
-            CommonConst.sleep(1000L * getInterval());
+            CommonCnConst.sleep(1000L * getInterval());
             loadData(time);
             time = System.currentTimeMillis();
         }

@@ -1,7 +1,7 @@
 package com.duoec.web.cn.web.controller.backend;
 
-import com.duoec.web.cn.core.interceptor.access.Access;
-import com.duoec.web.cn.core.interceptor.access.enums.RoleEnum;
+import com.duoec.web.base.core.interceptor.access.Access;
+import com.duoec.web.base.core.interceptor.access.enums.RoleEnum;
 import com.duoec.web.cn.web.service.init.impl.LanguageInit;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;

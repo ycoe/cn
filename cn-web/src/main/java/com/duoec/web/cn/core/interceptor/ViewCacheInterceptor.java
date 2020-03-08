@@ -1,12 +1,13 @@
 package com.duoec.web.cn.core.interceptor;
 
-import com.duoec.web.cn.core.common.CommonConst;
+import com.duoec.web.base.core.interceptor.access.enums.ContentTypeEnum;
+import com.duoec.web.cn.core.common.CommonCnConst;
 import com.duoec.web.cn.core.common.utils.NumberUtils;
 import com.duoec.web.cn.core.configure.http.BufferedResponseWrapper;
 import com.duoec.web.cn.core.service.ViewCacheService;
 import com.duoec.web.cn.core.spring.annotation.ViewCache;
 import com.duoec.web.cn.web.controller.BaseController;
-import com.duoec.web.core.freemarker.service.SiteService;
+import com.duoec.web.base.service.SiteService;
 import com.duoec.web.core.freemarker.view.MyModelAndView;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
@@ -49,7 +50,7 @@ public class ViewCacheInterceptor extends HandlerInterceptorAdapter {
         ViewCache viewCache = method.getAnnotation(ViewCache.class);
         request.setAttribute(ViewCacheService.VIEW_CACHE, viewCache);
 
-        if (CommonConst.VIEW_CACHE) {
+        if (CommonCnConst.VIEW_CACHE) {
             //将当前请求的唯一标识(url)设置进request,供viewCacheService使用
             setRequestUrlAttr(request);
             String content = pageCacheService.get(request, response, viewCache);
@@ -73,7 +74,7 @@ public class ViewCacheInterceptor extends HandlerInterceptorAdapter {
     }
 
     private void writeContentType(HttpServletResponse response) {
-        response.setContentType("text/html;charset=utf-8");
+        response.setContentType(ContentTypeEnum.TEXT_HTML.getContentType());
     }
 
     private void callPreHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) {
@@ -89,18 +90,18 @@ public class ViewCacheInterceptor extends HandlerInterceptorAdapter {
             }
 
             String pageNoStr = request.getParameter("pageNo");
-            if(!Strings.isNullOrEmpty(pageNoStr)) {
+            if (!Strings.isNullOrEmpty(pageNoStr)) {
                 int pageNo = 1;
-                if(NumberUtils.isDigits(pageNoStr)) {
+                if (NumberUtils.isDigits(pageNoStr)) {
                     pageNo = Integer.parseInt(pageNoStr);
                 }
                 request.setAttribute("pageNo", pageNo);
             }
 
             String pageSizeStr = request.getParameter("pageSize");
-            if(!Strings.isNullOrEmpty(pageSizeStr)) {
+            if (!Strings.isNullOrEmpty(pageSizeStr)) {
                 int pageSize = 20;
-                if(NumberUtils.isDigits(pageSizeStr)) {
+                if (NumberUtils.isDigits(pageSizeStr)) {
                     pageSize = Integer.parseInt(pageSizeStr);
                 }
                 request.setAttribute("pageSize", pageSize);
@@ -150,16 +151,15 @@ public class ViewCacheInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void afterCompletion(
-            HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-            throws Exception {
+            HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         ViewCache viewCache = getViewCache(request);
         String dataSource = request.getParameter("dataSource");
         if (
-                !CommonConst.VIEW_CACHE ||
+                !CommonCnConst.VIEW_CACHE ||
                         viewCache == null ||
                         response.getStatus() != HttpStatus.OK.value() ||
                         !Strings.isNullOrEmpty(dataSource)
-                ) {
+        ) {
             return;
         }
 

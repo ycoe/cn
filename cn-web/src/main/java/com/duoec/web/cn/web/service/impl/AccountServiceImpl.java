@@ -1,14 +1,14 @@
 package com.duoec.web.cn.web.service.impl;
 
-import com.duoec.web.core.freemarker.service.ICache;
-import com.duoec.web.cn.core.interceptor.access.AuthInfo;
-import com.duoec.web.cn.core.interceptor.access.enums.RoleEnum;
+import com.duoec.web.base.core.interceptor.access.AccessInterceptor;
+import com.duoec.web.base.core.interceptor.access.AuthInfo;
+import com.duoec.web.base.core.interceptor.access.enums.RoleEnum;
+import com.duoec.web.base.service.SiteService;
 import com.duoec.web.cn.web.dto.request.LoginRequest;
 import com.duoec.web.cn.web.dto.response.LoginResp;
 import com.duoec.web.cn.web.service.AccountService;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,10 +16,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AccountServiceImpl implements AccountService {
-
     @Autowired
-    @Qualifier("redisCache")
-    ICache cache;
+    private SiteService siteService;
 
     @Override
     public LoginResp login(LoginRequest request) {
@@ -38,16 +36,18 @@ public class AccountServiceImpl implements AccountService {
         authInfo.setUsername(request.getUsername());
         resp.setAuthInfo(authInfo);
 
-        int cacheTime = 24 * 3600; // 默认一天
+        // 默认一天
+        int cacheTime = 24 * 3600;
         if (request.getSaveMe() == 1) {
-            cacheTime *= 365; //一年
+            //一年
+            cacheTime *= 365;
         }
-        cache.set("SID:" + request.getSid(), authInfo, cacheTime);
+        siteService.setAuth(AccessInterceptor.STR_SID + request.getSid(), authInfo, cacheTime);
         return resp;
     }
 
     @Override
     public void logout(String sid) {
-        cache.remove("SID:" + sid);
+        siteService.unauth(sid);
     }
 }

@@ -1,6 +1,6 @@
 package com.duoec.web.cn.web.controller.front;
 
-import com.duoec.web.cn.core.common.exceptions.Http404Exception;
+import com.duoec.web.base.exceptions.Http404Exception;
 import com.duoec.web.cn.core.common.trace.TraceContextHolder;
 import com.duoec.web.cn.web.controller.BaseController;
 import com.duoec.web.cn.web.dojo.Product;

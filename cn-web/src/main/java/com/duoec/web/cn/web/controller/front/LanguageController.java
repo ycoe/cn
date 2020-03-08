@@ -1,6 +1,6 @@
 package com.duoec.web.cn.web.controller.front;
 
-import com.duoec.web.cn.core.common.CommonConst;
+import com.duoec.web.cn.core.common.CommonCnConst;
 import com.duoec.web.cn.core.common.utils.CookieUtils;
 import com.duoec.web.cn.web.controller.BaseController;
 import com.duoec.web.cn.web.dojo.Language;
@@ -30,7 +30,7 @@ public class LanguageController extends BaseController {
 
     private static final Pattern LANGUAGE_PARAMS_PATTERN = Pattern.compile("language=\\w+");
 
-    @Value("${domain}")
+    @Value("${site.domain}")
     private String domain;
 
     @Autowired
@@ -55,7 +55,7 @@ public class LanguageController extends BaseController {
         if (lang == null) {
             logger.error("语言[{}]不存在！", langId);
         } else {
-            CookieUtils.setCookie(response, domain, CommonConst.LANGUAGE_KEY, lang.getId());
+            CookieUtils.setCookie(response, domain, CommonCnConst.LANGUAGE_KEY, lang.getId());
         }
         return redirect(referer);
     }

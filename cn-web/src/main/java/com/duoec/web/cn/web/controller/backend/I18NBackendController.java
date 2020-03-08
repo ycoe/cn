@@ -1,8 +1,8 @@
 package com.duoec.web.cn.web.controller.backend;
 
-import com.duoec.web.cn.core.interceptor.access.Access;
-import com.duoec.web.cn.core.interceptor.access.enums.ContentTypeEnum;
-import com.duoec.web.cn.core.interceptor.access.enums.RoleEnum;
+import com.duoec.web.base.core.interceptor.access.Access;
+import com.duoec.web.base.core.interceptor.access.enums.ContentTypeEnum;
+import com.duoec.web.base.core.interceptor.access.enums.RoleEnum;
 import com.duoec.web.cn.web.dojo.I18N;
 import com.duoec.web.cn.web.dto.request.backend.I18NQuery;
 import com.duoec.web.cn.web.dto.request.backend.I18NSave;

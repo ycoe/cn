@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
  */
 @Component
 public class CommonConfigure {
-    @Value("${static.path}")
+    @Value("${site.static.path}")
     private String staticPath;
 
     @PostConstruct

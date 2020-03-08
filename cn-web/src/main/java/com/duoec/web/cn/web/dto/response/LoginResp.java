@@ -1,6 +1,6 @@
 package com.duoec.web.cn.web.dto.response;
 
-import com.duoec.web.cn.core.interceptor.access.AuthInfo;
+import com.duoec.web.base.core.interceptor.access.AuthInfo;
 
 /**
  * Created by ycoe on 16/12/27.

@@ -1,11 +1,11 @@
 package com.duoec.web.cn.core.configure;
 
-import com.duoec.web.cn.core.common.CommonConst;
+import com.duoec.web.cn.core.common.CommonCnConst;
 import com.duoec.web.cn.core.common.trace.TraceContext;
 import com.duoec.web.cn.core.common.trace.TraceContextHolder;
 import com.duoec.web.cn.core.common.utils.CookieUtils;
 import com.duoec.web.cn.core.common.utils.HttpServletRequestUtils;
-import com.duoec.web.cn.core.common.utils.UUIDUtils;
+import com.duoec.web.base.utils.UUIDUtils;
 import com.duoec.web.cn.core.configure.http.BufferedResponseWrapper;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
@@ -42,7 +42,7 @@ public class LoggerFilter implements Filter {
             ".map"
     );
 
-    @Value("${domain}")
+    @Value("${site.domain}")
     private String domain;
 
     @Override
@@ -163,13 +163,13 @@ public class LoggerFilter implements Filter {
     private String setLanguage(HttpServletRequest request, HttpServletResponse response) {
         String language = request.getParameter("language");
         if (Strings.isNullOrEmpty(language)) {
-            language = CookieUtils.getCookie(request, CommonConst.LANGUAGE_KEY);
+            language = CookieUtils.getCookie(request, CommonCnConst.LANGUAGE_KEY);
         }
         if (Strings.isNullOrEmpty(language)) {
-            language = CommonConst.DEFAULT_LANGUAGE.getId();
-            CookieUtils.setCookie(response, domain, CommonConst.LANGUAGE_KEY, language);
+            language = CommonCnConst.DEFAULT_LANGUAGE.getId();
+            CookieUtils.setCookie(response, domain, CommonCnConst.LANGUAGE_KEY, language);
         }
-        request.setAttribute(CommonConst.LANGUAGE_KEY, language);
+        request.setAttribute(CommonCnConst.LANGUAGE_KEY, language);
         return language;
     }
 }

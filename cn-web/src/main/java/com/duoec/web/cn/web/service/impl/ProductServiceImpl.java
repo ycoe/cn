@@ -1,6 +1,6 @@
 package com.duoec.web.cn.web.service.impl;
 
-import com.duoec.web.cn.core.common.exceptions.BusinessException;
+import com.duoec.web.base.exceptions.BusinessException;
 import com.duoec.web.cn.enums.CategoryTypeEnum;
 import com.duoec.web.cn.enums.ProductFlagEnum;
 import com.duoec.web.cn.web.dao.ProductDao;

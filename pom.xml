@@ -10,8 +10,9 @@
     <modules>
         <module>w-api</module>
         <module>cn-web</module>
-        <module>base-web</module>
+        <module>base-freemarker-web</module>
         <module>starter</module>
+        <module>base-web</module>
     </modules>
     <packaging>pom</packaging>
 
