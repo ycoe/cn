@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duoec.api.w.mapper.PostsMapper">
+  <resultMap id="BaseResultMap" type="com.duoec.api.w.entity.PostsEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="body" jdbcType="CHAR" property="body" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
+    <result column="attachments" jdbcType="INTEGER" property="attachments" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="seed_id" jdbcType="INTEGER" property="seedId" />
+    <result column="post_type" jdbcType="TINYINT" property="postType" />
+    <result column="available" jdbcType="TINYINT" property="available" />
+    <result column="action_date" jdbcType="DATE" property="actionDate" />
+    <result column="scope" jdbcType="TINYINT" property="scope" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, body, create_time, user_id, comment_count, attachments, parent_id, seed_id, post_type, 
+    available, action_date, scope
+  </sql>
+</mapper>

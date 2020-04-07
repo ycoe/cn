@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry location="/Users/xuwenzhen/Software/apache-maven-3.6.0/repository/mysql/mysql-connector-java/5.1.48/mysql-connector-java-5.1.48.jar"/>
+    <context id="score_ap_fdd" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1/w?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true&amp;serverTimezone=UTC"
+                        userId="root" password="8633212xu"/>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.duoec.api.w.entity"
+                            targetProject="/Users/xuwenzhen/Projects/duoec/cn/w-api/target">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="/Users/xuwenzhen/Projects/duoec/cn/w-api/target">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!--<javaClientGenerator type="XMLMAPPER" targetPackage="com.fangdd.ap.score.mapper" targetProject="/Users/xuwenzhen/Projects/fdd/a/a-score-service/a-score-server/src/main/java">-->
+        <!--<property name="enableSubPackages" value="true"/>-->
+        <!--</javaClientGenerator>-->
+        <javaClientGenerator targetPackage="com.duoec.api.w.mapper" type="XMLMAPPER"
+                             targetProject="/Users/xuwenzhen/Projects/duoec/cn/w-api/target">
+            <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+            <property name="enableSubPackages" value="true"/>
+
+            <!-- 可以为所有生成的接口添加一个父接口，但是MBG只负责生成，不负责检查-->
+            <!--<property name="rootInterface" value="com.fangdd.ap.score.dao.BaseDao"/>-->
+        </javaClientGenerator>
+
+
+        <table tableName="action" domainObjectName="ActionEntity" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByPrimaryKey="false" >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="action_type_config" domainObjectName="ActionTypeConfigEntity" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByPrimaryKey="false" >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="att_article" domainObjectName="AttArticleEntity" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByPrimaryKey="false" >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="att_files" domainObjectName="AttFilesEntity" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByPrimaryKey="false" >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="att_photo" domainObjectName="AttPhotoEntity" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByPrimaryKey="false" >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="category" domainObjectName="CategoryEntity" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByPrimaryKey="false" >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="config" domainObjectName="ConfigEntity" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByPrimaryKey="false" >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="post_attachment" domainObjectName="PostAttachmentEntity" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByPrimaryKey="false" >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="posts" domainObjectName="PostsEntity" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByPrimaryKey="false" >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="posts" domainObjectName="PostsEntity" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByPrimaryKey="false" >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="users" domainObjectName="UsersEntity" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByPrimaryKey="false" >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

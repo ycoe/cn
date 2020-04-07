@@ -1,0 +1,248 @@
+package com.duoec.api.w.service.impl;
+
+import com.duoec.api.w.dto.request.BlogQuery;
+import com.duoec.api.w.dto.request.BlogSaveRequest;
+import com.duoec.api.w.dto.response.BlogDetailVo;
+import com.duoec.api.w.dto.response.BlogListVo;
+import com.duoec.api.w.dto.response.UserInfo;
+import com.duoec.api.w.mongo.dao.BlogDao;
+import com.duoec.api.w.mongo.entity.Blog;
+import com.duoec.api.w.service.BlogService;
+import com.duoec.api.w.service.UserService;
+import com.duoec.web.base.core.interceptor.access.AuthInfo;
+import com.duoec.web.base.exceptions.Http404Exception;
+import com.fangdd.traffic.common.mongo.constant.MongoQueryOperatorsConsts;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Projections;
+import com.mongodb.client.model.Sorts;
+import com.mongodb.client.model.Updates;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
+/**
+ * @author xuwenzhen
+ */
+@Service
+public class BlogServiceImpl implements BlogService {
+
+
+    @Autowired
+    private BlogDao blogDao;
+
+    @Autowired
+    private UserService userService;
+
+    /**
+     * 查询微博（带分页）
+     *
+     * @param query 查询条件
+     * @return 带分页的微博列表
+     */
+    @Override
+    public BlogListVo list(BlogQuery query) {
+        BlogListVo data = new BlogListVo();
+        data.setTotal(0);
+        Bson filter = getFilter(query);
+        long total = blogDao.count(filter);
+        if (total == 0) {
+            return data;
+        }
+        data.setTotal((int) total);
+        Integer pageSize = query.getPageSize();
+        int skip = (query.getPageNo() - 1) * pageSize;
+        List<Blog> list = blogDao.findEntities(filter, Sorts.descending(Blog.FIELD_UPDATE_TIME), skip, pageSize);
+        data.setList(list);
+
+        Set<Integer> userIds = list.stream().map(Blog::getUserId).collect(Collectors.toSet());
+        List<UserInfo> userInfoList = userService.getUserInfos(userIds);
+        data.setUserInfoList(userInfoList);
+        return data;
+    }
+
+    /**
+     * 保存微博信息
+     *
+     * @param request  需要保存的微博信息
+     * @param authInfo 当前用户
+     * @return 保存成功的微博信息
+     */
+    @Override
+    public Blog save(BlogSaveRequest request, AuthInfo authInfo) {
+        Long blogId = request.getId();
+        long now = System.currentTimeMillis();
+        List<Long> parentIds = request.getParentIds();
+        if (blogId == null || blogId == 0) {
+            //新增
+            Blog blog = new Blog();
+            blog.setId(request.getId());
+            blog.setContent(request.getContent());
+            blog.setTags(request.getTags());
+            blog.setParentIds(parentIds);
+            blog.setArticles(request.getArticles());
+            blog.setSeedId(request.getSeedId());
+            blog.setCateIds(request.getCateIds());
+            blog.setImages(request.getImages());
+            blog.setVideos(request.getVideos());
+            blog.setFiles(request.getFiles());
+            blog.setCreateTime(now);
+            blog.setUpdateTime(now);
+            blog.setUserId(authInfo.getId());
+            blog.setDelete(false);
+            blogDao.insertOne(blog);
+
+            if (!CollectionUtils.isEmpty(parentIds)) {
+                //如果是评论
+                //更新用户信息
+                userService.incUserBlogCommentCount(authInfo.getId(), 1);
+
+                //源微博评论数+1
+                blogDao.updateMany(Filters.in(Blog.FIELD_ID, parentIds), Updates.inc(Blog.FIELD_COMMENT_COUNT, 1));
+            } else {
+                userService.incUserBlogCount(authInfo.getId(), 1);
+            }
+            return blog;
+        }
+        //更新操作
+        Blog blog = blogDao.getEntityById(blogId);
+        if (blog == null) {
+            throw new Http404Exception("找不到blogId=" + blogId + "的记录！");
+        }
+        blog.setContent(request.getContent());
+        blog.setTags(request.getTags());
+        blog.setParentIds(parentIds);
+        blog.setArticles(request.getArticles());
+        blog.setSeedId(request.getSeedId());
+        blog.setCateIds(request.getCateIds());
+        blog.setImages(request.getImages());
+        blog.setVideos(request.getVideos());
+        blog.setFiles(request.getFiles());
+        blog.setUpdateTime(now);
+        blogDao.updateEntity(blog);
+        return blog;
+    }
+
+    /**
+     * 删除某条微博
+     *
+     * @param blogId   微博ID
+     * @param authInfo 当前用户
+     */
+    @Override
+    public void delete(Long blogId, AuthInfo authInfo) {
+        Bson filter = Filters.eq(Blog.FIELD_ID, blogId);
+        Blog existsBlog = blogDao.getEntity(filter, Projections.include(Blog.FIELD_PARENT_IDS, Blog.FIELD_SEED_ID, Blog.FIELD_COMMENT_COUNT));
+        if (existsBlog == null) {
+            throw new Http404Exception("找不到blogId=" + blogId + "的记录！");
+        }
+
+        //逻辑删除
+        blogDao.updateMany(Filters.or(
+                filter,
+                Filters.eq(Blog.FIELD_SEED_ID, blogId)
+        ), Updates.set(Blog.FIELD_DELETE, true));
+
+        //扣减用户计数
+        if (CollectionUtils.isEmpty(existsBlog.getParentIds())) {
+            userService.incUserBlogCount(authInfo.getId(), -1);
+        } else {
+            //如果是评论
+            userService.incUserBlogCommentCount(authInfo.getId(), -1);
+
+            Integer commentCount = existsBlog.getCommentCount();
+            blogDao.updateOne(Filters.and(
+                    Filters.in(Blog.FIELD_ID, existsBlog.getParentIds()),
+                    Filters.gte(Blog.FIELD_COMMENT_COUNT, commentCount)
+            ), Updates.inc(Blog.FIELD_COMMENT_COUNT, -commentCount - 1));
+        }
+    }
+
+    /**
+     * 获取某个微博的详情
+     *
+     * @param blogId 微博ID
+     * @return 微博详情
+     */
+    @Override
+    public BlogDetailVo detail(long blogId) {
+        Bson filter = Filters.eq(Blog.FIELD_ID, blogId);
+        Blog blog = blogDao.getEntity(filter);
+
+        if (blog == null) {
+            throw new Http404Exception("找不到blogId=" + blogId + "的记录！");
+        }
+        Set<Integer> userIds = Sets.newHashSet();
+        userIds.add(blog.getUserId());
+        Map<Long, Blog> blogMap = Maps.newHashMap();
+        blogMap.put(blogId, blog);
+
+
+        blogDao
+                .find(Filters.and(
+                        Filters.eq(Blog.FIELD_SEED_ID, blogId),
+                        Filters.eq(Blog.FIELD_DELETE, false)
+                ))
+                .sort(Sorts.ascending(Blog.FIELD_ID))
+                .forEach((Consumer<? super Blog>) comment -> {
+                    Blog parent = blogMap.get(comment.getParentIds().get(comment.getParentIds().size() - 1));
+                    if (parent == null) {
+                        return;
+                    }
+                    userIds.add(comment.getUserId());
+                    blogMap.put(comment.getId(), comment);
+                    List<Blog> comments = parent.getComments();
+                    if (comments == null) {
+                        comments = Lists.newArrayList();
+                        parent.setComments(comments);
+                    }
+                    comments.add(comment);
+                });
+
+        BlogDetailVo data = new BlogDetailVo();
+        if (!CollectionUtils.isEmpty(userIds)) {
+            List<UserInfo> userInfos = userService.getUserInfos(userIds);
+            data.setUserInfoList(userInfos);
+        }
+
+        data.setBlog(blog);
+        return data;
+    }
+
+    /**
+     * 获取用于编辑的信息
+     *
+     * @param blogId 微博ID
+     * @return 微博编辑信息
+     */
+    @Override
+    public Blog get(long blogId) {
+        Bson filter = Filters.eq(Blog.FIELD_ID, blogId);
+        Blog blog = blogDao.getEntity(filter);
+
+        if (blog == null) {
+            throw new Http404Exception("找不到blogId=" + blogId + "的记录！");
+        }
+
+        return blog;
+    }
+
+    private Bson getFilter(BlogQuery query) {
+        Document filter = new Document(Blog.FIELD_DELETE, false);
+        if (query.getSeed() == null || query.getSeed()) {
+            //不加载评论
+            filter.put(Blog.FIELD_SEED_ID, new Document(MongoQueryOperatorsConsts.EXISTS, false));
+        }
+        return filter;
+    }
+}
