@@ -1,5 +1,6 @@
 package com.duoec.api.w.service.impl;
 
+import com.duoec.api.w.dto.request.BlogCommentQuery;
 import com.duoec.api.w.dto.request.BlogQuery;
 import com.duoec.api.w.dto.request.BlogSaveRequest;
 import com.duoec.api.w.dto.response.BlogDetailVo;
@@ -140,9 +141,13 @@ public class BlogServiceImpl implements BlogService {
      * @param authInfo 当前用户
      */
     @Override
-    public void delete(Long blogId, AuthInfo authInfo) {
+    public int delete(Long blogId, AuthInfo authInfo) {
         Bson filter = Filters.eq(Blog.FIELD_ID, blogId);
-        Blog existsBlog = blogDao.getEntity(filter, Projections.include(Blog.FIELD_PARENT_IDS, Blog.FIELD_SEED_ID, Blog.FIELD_COMMENT_COUNT));
+        Blog existsBlog = blogDao.getEntity(filter, Projections.include(
+                Blog.FIELD_PARENT_IDS,
+                Blog.FIELD_SEED_ID,
+                Blog.FIELD_COMMENT_COUNT
+        ));
         if (existsBlog == null) {
             throw new Http404Exception("找不到blogId=" + blogId + "的记录！");
         }
@@ -153,6 +158,7 @@ public class BlogServiceImpl implements BlogService {
                 Filters.eq(Blog.FIELD_SEED_ID, blogId)
         ), Updates.set(Blog.FIELD_DELETE, true));
 
+        Integer commentCount = 0;
         //扣减用户计数
         if (CollectionUtils.isEmpty(existsBlog.getParentIds())) {
             userService.incUserBlogCount(authInfo.getId(), -1);
@@ -160,12 +166,16 @@ public class BlogServiceImpl implements BlogService {
             //如果是评论
             userService.incUserBlogCommentCount(authInfo.getId(), -1);
 
-            Integer commentCount = existsBlog.getCommentCount();
+            commentCount = existsBlog.getCommentCount();
+            if (commentCount == null) {
+                commentCount = 0;
+            }
             blogDao.updateOne(Filters.and(
                     Filters.in(Blog.FIELD_ID, existsBlog.getParentIds()),
                     Filters.gte(Blog.FIELD_COMMENT_COUNT, commentCount)
             ), Updates.inc(Blog.FIELD_COMMENT_COUNT, -commentCount - 1));
         }
+        return commentCount + 1;
     }
 
     /**
@@ -235,6 +245,35 @@ public class BlogServiceImpl implements BlogService {
         }
 
         return blog;
+    }
+
+    /**
+     * 获取某个博客的评论列表
+     *
+     * @param query 评论列表请求
+     * @return 评论列表
+     */
+    @Override
+    public BlogListVo getComments(BlogCommentQuery query) {
+        BlogListVo data = new BlogListVo();
+        data.setTotal(0);
+        Document filter = new Document(Blog.FIELD_DELETE, false);
+        filter.put(Blog.FIELD_SEED_ID, query.getBlogId());
+        long total = blogDao.count(filter);
+        if (total == 0) {
+            return data;
+        }
+        data.setTotal((int) total);
+        Integer pageSize = query.getPageSize();
+        int skip = (query.getPageNo() - 1) * pageSize;
+        List<Blog> list = blogDao.findEntities(filter, Sorts.descending(Blog.FIELD_CREATE_TIME), skip, pageSize);
+        data.setList(list);
+
+        Set<Integer> userIds = list.stream().map(Blog::getUserId).collect(Collectors.toSet());
+        List<UserInfo> userInfoList = userService.getUserInfos(userIds);
+        data.setUserInfoList(userInfoList);
+
+        return data;
     }
 
     private Bson getFilter(BlogQuery query) {

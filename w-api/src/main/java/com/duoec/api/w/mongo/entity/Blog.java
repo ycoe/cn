@@ -10,6 +10,7 @@ import java.util.List;
  * @author xuwenzhen
  */
 public class Blog {
+    public static final String FIELD_CREATE_TIME = "createTime";
     public static final String FIELD_UPDATE_TIME = "updateTime";
     public static final String FIELD_ID = "_id";
     public static final String FIELD_PARENT_IDS = "parentIds";

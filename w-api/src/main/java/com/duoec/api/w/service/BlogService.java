@@ -1,5 +1,6 @@
 package com.duoec.api.w.service;
 
+import com.duoec.api.w.dto.request.BlogCommentQuery;
 import com.duoec.api.w.dto.request.BlogQuery;
 import com.duoec.api.w.dto.request.BlogSaveRequest;
 import com.duoec.api.w.dto.response.BlogDetailVo;
@@ -36,7 +37,7 @@ public interface BlogService {
      * @param blogId   微博ID
      * @param authInfo 当前用户
      */
-    void delete(Long blogId, AuthInfo authInfo);
+    int delete(Long blogId, AuthInfo authInfo);
 
     /**
      * 获取某个微博的详情
@@ -53,4 +54,12 @@ public interface BlogService {
      * @return 微博编辑信息
      */
     Blog get(long blogId);
+
+    /**
+     * 获取某个博客的评论列表
+     *
+     * @param query 评论列表请求
+     * @return 评论列表
+     */
+    BlogListVo getComments(BlogCommentQuery query);
 }

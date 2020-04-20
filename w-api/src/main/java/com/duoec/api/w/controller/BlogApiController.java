@@ -1,5 +1,6 @@
 package com.duoec.api.w.controller;
 
+import com.duoec.api.w.dto.request.BlogCommentQuery;
 import com.duoec.api.w.dto.request.BlogQuery;
 import com.duoec.api.w.dto.request.BlogSaveRequest;
 import com.duoec.api.w.dto.response.BlogDetailVo;
@@ -82,6 +83,19 @@ public class BlogApiController {
     }
 
     /**
+     * 获取某个微博的评论列表
+     *
+     * @param blogId blog.id
+     * @return 评论列表
+     */
+    @Access
+    @GetMapping("/{blogId:\\d+}/comment")
+    public BaseResponse<BlogListVo> getComments(@PathVariable long blogId, BlogCommentQuery query) {
+        query.setBlogId(blogId);
+        return BaseResponse.success(blogService.getComments(query));
+    }
+
+    /**
      * 保存微博
      *
      * @param request 需要保存的微博信息
@@ -101,10 +115,9 @@ public class BlogApiController {
      * @return 删除结果
      */
     @Access
-    @DeleteMapping("/${blogId:\\d+}")
-    public BaseResponse delete(@PathVariable Long blogId) {
+    @DeleteMapping("/{blogId:\\d+}")
+    public BaseResponse<Integer> delete(@PathVariable Long blogId) {
         AuthInfo authInfo = AuthInfoHolder.get();
-        blogService.delete(blogId, authInfo);
-        return BaseResponse.success();
+        return BaseResponse.success(blogService.delete(blogId, authInfo));
     }
 }
