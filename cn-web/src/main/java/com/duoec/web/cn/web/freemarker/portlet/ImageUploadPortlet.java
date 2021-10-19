@@ -1,10 +1,12 @@
 package com.duoec.web.cn.web.freemarker.portlet;
 
-import com.duoec.web.core.freemarker.PortletException;
+import com.duoec.web.base.service.QiniuService;
 import com.duoec.web.core.freemarker.portlet.BaseFuturePortlet;
 import com.duoec.web.core.freemarker.portlet.Portlet;
 import com.duoec.web.core.freemarker.portlet.PortletParam;
 import com.google.common.base.Strings;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Random;
 
@@ -14,6 +16,12 @@ import java.util.Random;
  */
 @Portlet("imageUpload")
 public class ImageUploadPortlet extends BaseFuturePortlet{
+    @Autowired
+    private QiniuService qiniuService;
+
+    @Value("${qiniu.bucket.cn:duoec}")
+    private String cnBucket;
+
     @PortletParam
     private String formName;
 
@@ -36,7 +44,9 @@ public class ImageUploadPortlet extends BaseFuturePortlet{
     private int multiple = 1;
 
     @Override
-    public void loadData() throws PortletException {
+    public void loadData() {
+        String token = qiniuService.getUploadToken(cnBucket);
+        addData("token", token);
         if(Strings.isNullOrEmpty(id)) {
             id = "uploader_" + new Random().nextInt(Integer.MAX_VALUE);
             addData("id", id);

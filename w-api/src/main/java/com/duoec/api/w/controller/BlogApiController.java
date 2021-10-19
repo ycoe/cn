@@ -6,6 +6,7 @@ import com.duoec.api.w.dto.request.BlogSaveRequest;
 import com.duoec.api.w.dto.response.BlogDetailVo;
 import com.duoec.api.w.dto.response.BlogEditVo;
 import com.duoec.api.w.dto.response.BlogListVo;
+import com.duoec.api.w.dto.response.BlogNewVo;
 import com.duoec.api.w.mongo.entity.Blog;
 import com.duoec.api.w.service.BlogService;
 import com.duoec.web.base.core.interceptor.access.Access;
@@ -42,7 +43,7 @@ public class BlogApiController {
      */
     @Access
     @GetMapping("/list")
-    public BaseResponse<BlogListVo> list(BlogQuery query) {
+    public BaseResponse<BlogListVo<Blog>> list(BlogQuery query) {
         if (query.getPageNo() == null) {
             query.setPageNo(1);
         }
@@ -119,5 +120,30 @@ public class BlogApiController {
     public BaseResponse<Integer> delete(@PathVariable Long blogId) {
         AuthInfo authInfo = AuthInfoHolder.get();
         return BaseResponse.success(blogService.delete(blogId, authInfo));
+    }
+
+    /**
+     * 查询某些条件下发布的微博+评论数量
+     *
+     * @param query 查询条件
+     * @return 数量
+     */
+//    @Access
+    @GetMapping("/count")
+    public BaseResponse<Integer> getBlogCount(BlogQuery query) {
+        return BaseResponse.success(blogService.count(query));
+    }
+
+    /**
+     * 拉取上次之后的新微博+评论数
+     *
+     * @param query 查询条件
+     * @return 数量
+     */
+//    @Access
+    @GetMapping("/new")
+    public BaseResponse<BlogListVo<BlogNewVo>> getNewBlogList(BlogQuery query) {
+        query.setSeed(false);
+        return BaseResponse.success(blogService.listNewBlog(query));
     }
 }

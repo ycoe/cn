@@ -24,7 +24,7 @@
             $('.img-uploader').each(function(){
                 var id = $(this).find('.img-upload-btn').attr('id');
                 var uploader = WebUploader.create({
-                    server: '/manager/uploader/image.json',
+                    server: 'https://upload-z2.qiniup.com',
                     pick: '#' + id,
                     resize: false,
                     accept: {

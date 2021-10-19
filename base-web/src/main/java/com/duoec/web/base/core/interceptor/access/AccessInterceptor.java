@@ -7,10 +7,10 @@ import com.duoec.web.base.dto.response.BaseResponse;
 import com.duoec.web.base.exceptions.Http406Exception;
 import com.duoec.web.base.service.SiteService;
 import com.duoec.web.base.utils.UUIDUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
@@ -19,6 +19,7 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -29,6 +30,8 @@ import java.net.URLEncoder;
 public class AccessInterceptor extends HandlerInterceptorAdapter {
     private static final Logger logger = LoggerFactory.getLogger(AccessInterceptor.class);
     public static final String STR_SID = "SID:";
+    private static final String STR_HOST = "Host";
+    private static final String SW_ID = "sw-id";
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -36,11 +39,8 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private SiteService siteService;
 
-    @Value("${site.domain}")
-    private String domain;
-
-    @Value("${site.ssid:SSID}")
-    private String ssid;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -53,7 +53,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
             request.setAttribute(CommonWebConst.STR_CONTENT_TYPE, ContentTypeEnum.APPLICATION_JSON);
         }
         String sid = getSid(request, response);
-        request.setAttribute(ssid, sid);
+        request.setAttribute(CommonWebConst.SSID, sid);
 
         //获取用户
         AuthInfo authInfo = (AuthInfo) redisTemplate.opsForValue().get(STR_SID + sid);
@@ -89,7 +89,17 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
         }
 
         //没有权限！
-        directLoginPage(request);
+        if (returnType.isAssignableFrom(BaseResponse.class)) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            BaseResponse<Object> data = BaseResponse.error(HttpServletResponse.SC_FORBIDDEN, "权限不足！");
+            try {
+                objectMapper.writeValue(response.getOutputStream(), data);
+            } catch (IOException e) {
+                logger.error("写入response失败", e);
+            }
+        } else {
+            directLoginPage(request);
+        }
         return false;
     }
 
@@ -101,11 +111,14 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
      * 获取用户ID
      */
     private String getSid(HttpServletRequest request, HttpServletResponse response) {
+        String domain = request.getHeader(STR_HOST);
         String sid = siteService.getCookie(CommonWebConst.SSID);
-        request.setAttribute(CommonWebConst.SSID, sid);
-        if (!StringUtils.isEmpty(sid)) {
+        if (StringUtils.isEmpty(sid)) {
+            //尝试从header中取
+            sid = request.getHeader(SW_ID);
+        }
+        if (StringUtils.isEmpty(sid)) {
             sid = UUIDUtils.generateUUID();
-
             //写入cookies
             siteService.setCookie(domain, CommonWebConst.SSID, sid);
         }

@@ -25,7 +25,8 @@
     </div>
 </div>
 <script>
+    var uploadToken = '${token}';
     $(function(){
-        new ImageUploader('${id}');
+        new ImageUpload('${id}');
     })
 </script>

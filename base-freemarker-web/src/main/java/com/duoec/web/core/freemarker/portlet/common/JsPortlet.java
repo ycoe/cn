@@ -71,14 +71,14 @@ public class JsPortlet extends ResourcePortlet {
         }
         if (!jsFile.exists()) {
             //如果文件不存在时,才写入文件
-            asyncExecutor.getAsyncExecutor().execute(() -> {
+//            asyncExecutor.getAsyncExecutor().execute(() -> {
                 String content = TemplateModelUtils.renderToString(jsVar);
                 try (BufferedWriter bufferedWriter = Files.newWriter(new File(jsFilePath), Charsets.UTF_8)) {
                     bufferedWriter.write(content);
                 } catch (IOException e) {
                     logger.error("写入脚本文件[{}]出错!", jsFilePath, e);
                 }
-            });
+//            });
         }
 
         String jsUrl = FreemarkerConst.ASSETS_URL + "/" + jsFileName;

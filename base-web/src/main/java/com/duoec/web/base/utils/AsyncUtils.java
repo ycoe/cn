@@ -1,15 +1,10 @@
-package com.fangdd.bestir.utils;
+package com.duoec.web.base.utils;
 
-import com.fangdd.logtrace.TraceId;
-import com.fangdd.logtrace.TraceIdThreadLocal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
-
-import static com.fangdd.logtrace.TraceWith.TRACE_ID_MDC_NAME;
 
 /**
  * 异步处理
@@ -31,12 +26,7 @@ public class AsyncUtils {
      * @return 异步处理结果
      */
     public static <D> CompletableFuture<D> traceAsync(Supplier<D> supplier) {
-        TraceId traceId = TraceIdThreadLocal.concurrentNext();
-        return CompletableFuture.supplyAsync(() -> {
-            TraceIdThreadLocal.set(traceId);
-            MDC.put(TRACE_ID_MDC_NAME, traceId.toString());
-            return supplier.get();
-        });
+        return CompletableFuture.supplyAsync(supplier::get);
     }
 
     /**

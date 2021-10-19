@@ -1,6 +1,5 @@
 package com.duoec.web.cn.web.service.impl;
 
-import com.duoec.web.base.core.interceptor.access.AccessInterceptor;
 import com.duoec.web.base.core.interceptor.access.AuthInfo;
 import com.duoec.web.base.core.interceptor.access.enums.RoleEnum;
 import com.duoec.web.base.service.SiteService;
@@ -44,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
             //一年
             cacheTime *= 365;
         }
-        siteService.setAuth(AccessInterceptor.STR_SID + request.getSid(), authInfo, cacheTime);
+        siteService.setAuth(request.getSid(), authInfo, cacheTime);
         return resp;
     }
 

@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Map;
 
@@ -40,7 +41,8 @@ public class XFreeMarkerView extends FreeMarkerView { //NOSONAR
             logger.debug("Rendering FreeMarker template [" + getUrl() + "] in FreeMarkerView '" + getBeanName() + "'");
         }
         // Grab the locale-specific version of the template.
-        Locale locale = RequestContextUtils.getLocale(request);
+        Locale locale = Locale.CHINA;
+        this.setEncoding(StandardCharsets.UTF_8.name());
         Template template = getTemplate(locale);
 
         Environment evn = template.createProcessingEnvironment(fmModel, response.getWriter(), null);
@@ -119,7 +121,7 @@ public class XFreeMarkerView extends FreeMarkerView { //NOSONAR
         try {
             Object templateSource = tl.findTemplateSource(templatePath);
             if (templateSource != null) {
-                Template resourceTemplate = configuration.getTemplate(templatePath);
+                Template resourceTemplate = configuration.getTemplate(templatePath, StandardCharsets.UTF_8.name());
                 return new TemplateWrapper(resourceTemplate, templateSource, tl);
             }
         } catch (IOException e) {

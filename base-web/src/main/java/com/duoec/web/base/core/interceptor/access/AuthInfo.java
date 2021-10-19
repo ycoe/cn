@@ -9,7 +9,7 @@ import java.util.List;
  * Created by ycoe on 16/12/27.
  */
 public class AuthInfo implements Serializable {
-    private long id;
+    private int id;
 
     private String username;
 
@@ -23,11 +23,11 @@ public class AuthInfo implements Serializable {
         this.roles = roles;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

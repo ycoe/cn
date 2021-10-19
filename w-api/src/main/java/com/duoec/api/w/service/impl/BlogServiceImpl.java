@@ -5,6 +5,7 @@ import com.duoec.api.w.dto.request.BlogQuery;
 import com.duoec.api.w.dto.request.BlogSaveRequest;
 import com.duoec.api.w.dto.response.BlogDetailVo;
 import com.duoec.api.w.dto.response.BlogListVo;
+import com.duoec.api.w.dto.response.BlogNewVo;
 import com.duoec.api.w.dto.response.UserInfo;
 import com.duoec.api.w.mongo.dao.BlogDao;
 import com.duoec.api.w.mongo.entity.Blog;
@@ -52,8 +53,8 @@ public class BlogServiceImpl implements BlogService {
      * @return 带分页的微博列表
      */
     @Override
-    public BlogListVo list(BlogQuery query) {
-        BlogListVo data = new BlogListVo();
+    public BlogListVo<Blog> list(BlogQuery query) {
+        BlogListVo<Blog> data = new BlogListVo<>();
         data.setTotal(0);
         Bson filter = getFilter(query);
         long total = blogDao.count(filter);
@@ -63,7 +64,7 @@ public class BlogServiceImpl implements BlogService {
         data.setTotal((int) total);
         Integer pageSize = query.getPageSize();
         int skip = (query.getPageNo() - 1) * pageSize;
-        List<Blog> list = blogDao.findEntities(filter, Sorts.descending(Blog.FIELD_UPDATE_TIME), skip, pageSize);
+        List<Blog> list = blogDao.findEntities(filter, Sorts.descending(Blog.FIELD_CREATE_TIME), skip, pageSize);
         data.setList(list);
 
         Set<Integer> userIds = list.stream().map(Blog::getUserId).collect(Collectors.toSet());
@@ -197,7 +198,6 @@ public class BlogServiceImpl implements BlogService {
         Map<Long, Blog> blogMap = Maps.newHashMap();
         blogMap.put(blogId, blog);
 
-
         blogDao
                 .find(Filters.and(
                         Filters.eq(Blog.FIELD_SEED_ID, blogId),
@@ -254,8 +254,8 @@ public class BlogServiceImpl implements BlogService {
      * @return 评论列表
      */
     @Override
-    public BlogListVo getComments(BlogCommentQuery query) {
-        BlogListVo data = new BlogListVo();
+    public BlogListVo<Blog> getComments(BlogCommentQuery query) {
+        BlogListVo<Blog> data = new BlogListVo<>();
         data.setTotal(0);
         Document filter = new Document(Blog.FIELD_DELETE, false);
         filter.put(Blog.FIELD_SEED_ID, query.getBlogId());
@@ -276,12 +276,95 @@ public class BlogServiceImpl implements BlogService {
         return data;
     }
 
+    /**
+     * 查询{time}之后，新的微博 + 评论数量
+     *
+     * @param query 筛选条件
+     * @return 新的数量
+     */
+    @Override
+    public int count(BlogQuery query) {
+        Bson filter = getFilter(query);
+        long count = blogDao.count(filter);
+        return Math.toIntExact(count);
+    }
+
+    /**
+     * 返回{time}之后新的微博 + 评论
+     *
+     * @param query 查询条件
+     * @return 列表
+     */
+    @Override
+    public BlogListVo<BlogNewVo> listNewBlog(BlogQuery query) {
+        BlogListVo<BlogNewVo> vo = new BlogListVo<>();
+        Bson filter = getFilter(query);
+        long total = blogDao.count(filter);
+        vo.setTotal((int) total);
+
+        if (total > 0) {
+            List<BlogNewVo> blogList = blogDao.getDocumentMongoCollection(BlogNewVo.class)
+                    .find(filter)
+                    .sort(Sorts.descending(Blog.FIELD_UPDATE_TIME))
+                    .into(Lists.newArrayList());
+
+            //如果是回复，则设置原创作内容
+            setCommendParents(blogList);
+
+            Set<Integer> userIds = blogList.stream().map(BlogNewVo::getUserId).collect(Collectors.toSet());
+            List<UserInfo> userInfoList = userService.getUserInfos(userIds);
+            vo.setUserInfoList(userInfoList);
+
+            vo.setList(blogList);
+        }
+
+        return vo;
+    }
+
+    private void setCommendParents(List<BlogNewVo> blogs) {
+        if (CollectionUtils.isEmpty(blogs)) {
+            return;
+        }
+        Set<Long> blogIds = Sets.newHashSet();
+        Map<Long, List<BlogNewVo>> blogMap = Maps.newHashMap();
+        blogs.stream().filter(blog -> !CollectionUtils.isEmpty(blog.getParentIds())).forEach(blog -> {
+            long seedId = blog.getParentIds().get(0);
+            blogMap.computeIfAbsent(seedId, k -> Lists.newArrayList()).add(blog);
+            blogIds.add(seedId);
+        });
+        if (CollectionUtils.isEmpty(blogIds)) {
+            return;
+        }
+        blogDao.find(Filters.in(Blog.FIELD_ID, blogIds)).forEach((Consumer<? super Blog>) blog -> {
+            Long seedId = blog.getId();
+            List<BlogNewVo> recommends = blogMap.get(seedId);
+            if (CollectionUtils.isEmpty(recommends)) {
+                return;
+            }
+            recommends.forEach(recommend -> recommend.setParent(blog));
+        });
+    }
+
     private Bson getFilter(BlogQuery query) {
         Document filter = new Document(Blog.FIELD_DELETE, false);
         if (query.getSeed() == null || query.getSeed()) {
             //不加载评论
             filter.put(Blog.FIELD_SEED_ID, new Document(MongoQueryOperatorsConsts.EXISTS, false));
         }
+        Long startTime = query.getStartTime();
+        if (startTime != null && startTime > 0) {
+            filter.put(Blog.FIELD_UPDATE_TIME, new Document(MongoQueryOperatorsConsts.GT, startTime));
+        }
+        Long endTime = query.getEndTime();
+        if (endTime != null && endTime > 0) {
+            Document updateTimeOpts = (Document) filter.get(Blog.FIELD_UPDATE_TIME);
+            if (updateTimeOpts == null) {
+                filter.put(Blog.FIELD_UPDATE_TIME, new Document(MongoQueryOperatorsConsts.LT, endTime));
+            } else {
+                updateTimeOpts.put(MongoQueryOperatorsConsts.LT, endTime);
+            }
+        }
+
         return filter;
     }
 }

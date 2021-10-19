@@ -1,7 +1,8 @@
 /cms-web/src/main/webapp/node_modules
 
-忽略dest编译目录
+#忽略dest编译目录
 dest/
+backup/
 
 #针对移动端开发忽略.mtj.tmp/目录下所有文件
 .mtj.tmp/
@@ -57,4 +58,7 @@ node_modules/
 /target/
 /src/main/webapp/dist/
 cn-web/src/main/resources/static/tmp/
+
+**/.DS_Store
+
 

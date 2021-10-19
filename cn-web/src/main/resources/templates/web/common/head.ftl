@@ -2,7 +2,7 @@
     <img src="${assetsUrl}/img/logo.jpg" id="logo-img" alt=""/>
     <div class="logo">
         <strong>${'title'?i18n}</strong>
-        ${domain!}
+        ${'domain'?i18n}
     </div>
 </div>
 <div class="full-wrap" id="head-nav">

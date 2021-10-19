@@ -7,6 +7,7 @@ import com.duoec.web.cn.web.service.AccountService;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,14 +50,14 @@ public class AccountBackendController extends BackendController{
         }
     }
 
-    @RequestMapping("/logout.html")
+    @GetMapping("/logout.html")
     public ModelAndView logout(HttpServletRequest request){
         String sid = (String) request.getAttribute(CommonWebConst.SSID);
         accountService.logout(sid);
         return redirect("/manager/login.html");
     }
 
-    @RequestMapping("/forbid.html")
+    @GetMapping("/forbid.html")
     public ModelAndView forbid(){
         return view("/backend/forbid.ftl");
     }

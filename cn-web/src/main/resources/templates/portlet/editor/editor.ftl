@@ -17,7 +17,11 @@
                     toolbar1: "undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | fontselect fontsizeselect ",
                     toolbar2: "forecolor backcolor | bullist numlist | outdent indent | removeformat | link unlink uploadimage | preview",
                     menubar: false,
-                    images_upload_url: '/manager/uploader/image.json',
+                    images_upload_url: 'https://up-z0.qiniup.com',
+                    image_advtab: true,
+                    images_upload_handler: function (blobInfo, success, failure) {
+                      console.log('hello tinymce');
+                    },
 
                     init_instance_callback: function (editor) {
                         editor.on('Change', function () {

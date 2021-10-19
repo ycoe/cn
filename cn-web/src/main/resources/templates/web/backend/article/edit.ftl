@@ -4,6 +4,7 @@
 <meta name="keywords" content="${keywords!}" />
 </@content>
 <@content name="body">
+    <@js src="/assets/js/qiniu.min.js"/>
     <div class="row m-bottom-md">
         <div class="col-sm-6 m-bottom-sm">
             <h2 class="no-margin">

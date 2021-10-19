@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -65,9 +66,9 @@ public class TemplateModelUtils {
     }
 
     public static String renderToString(Template template, TemplateModel models, FreemarkerResourceVars resourceVars) {
-        Writer writer = new StringWriter();
-        try {
+        try (Writer writer = new StringWriter()){
             Environment evn = template.createProcessingEnvironment(models, writer, null);
+            evn.setOutputEncoding(StandardCharsets.UTF_8.name());
             if (resourceVars != null) {
                 evn.setVariable(FreemarkerConst.WATERFALL_VAR, resourceVars);
             }
@@ -76,12 +77,6 @@ public class TemplateModelUtils {
             return writer.toString();
         } catch (TemplateException | IOException e) {
             throw new TemplateProcessException(e);
-        } finally {
-            try {
-                writer.close();
-            } catch (IOException e) {
-                logger.error("关闭StringWriter失败!", e);
-            }
         }
     }
 }

@@ -64,15 +64,15 @@ public class CssPortlet extends ResourcePortlet {
         String cssFilePath = FreemarkerConst.STATIC_PATH + cssFileName;
         File cssFile = new File(cssFilePath);
         if (!cssFile.exists()) {
-            asyncExecutor.getAsyncExecutor().execute(() -> {
-                String content = TemplateModelUtils.renderToString(cssVar);
+//            asyncExecutor.getAsyncExecutor().execute(() -> {
+            String content = TemplateModelUtils.renderToString(cssVar);
 //            compress(content, cssFilePath);
-                try (BufferedWriter bufferedWriter = Files.newWriter(new File(cssFilePath), Charsets.UTF_8)) {
-                    bufferedWriter.write(content);
-                } catch (IOException e) {
-                    logger.error("写入样式文件[" + cssFilePath + "]出错!", e);
-                }
-            });
+            try (BufferedWriter bufferedWriter = Files.newWriter(new File(cssFilePath), Charsets.UTF_8)) {
+                bufferedWriter.write(content);
+            } catch (IOException e) {
+                logger.error("写入样式文件[" + cssFilePath + "]出错!", e);
+            }
+//            });
         }
 
         String cssUrl = FreemarkerConst.ASSETS_URL + "/" + cssFileName;

@@ -1,0 +1,16 @@
+{ 
+    "_id" : "user", 
+    "seq" : NumberLong(3)
+}
+{ 
+    "_id" : "blog", 
+    "seq" : NumberLong(3945)
+}
+{ 
+    "_id" : "article", 
+    "seq" : NumberLong(1)
+}
+{ 
+    "_id" : "user_action_log", 
+    "seq" : NumberLong(41)
+}

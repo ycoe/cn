@@ -19,6 +19,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -218,7 +219,7 @@ public class BasePortlet {
         try {
             Object templateSource = templateLoader.findTemplateSource(templatePath);
             if (templateSource != null) {
-                Template template = env.getConfiguration().getTemplate(templatePath);
+                Template template = env.getConfiguration().getTemplate(templatePath, StandardCharsets.UTF_8.name());
                 return new TemplateWrapper(template, templateSource, templateLoader);
             }
         } catch (IOException e) {
@@ -247,11 +248,6 @@ public class BasePortlet {
             Template jsTemplate = jsTemplateWrapper.getTemplate();
             resourceVars.addJs(jsTemplate.getName(), jsTemplate.toString(), order, jsTemplateWrapper.getLastModified());
         }
-
-//        File portletScriptFile = new File(portletBasePath + portletViewPath + script + ".js");
-//        if (portletScriptFile.exists()) {
-//            resourceVars.addJs(portletScriptFile, order);
-//        }
     }
 
     protected String getPortletName() {
@@ -275,8 +271,4 @@ public class BasePortlet {
     public void setDir(String dir) {
         this.dir = dir;
     }
-
-//    protected ClientEnum getClientEnum() {
-//        return TraceContextHolder.getTraceContext().getClient();
-//    }
 }

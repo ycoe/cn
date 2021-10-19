@@ -67,7 +67,7 @@ public class AsyncExecutor implements AsyncConfigurer {
         while (queue.peek() != null) {
             logger.info("default executor queue size: {}", queue.size());
             try {
-                Thread.sleep(1);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 logger.error("Thread.sleep(1);发生错误", e);
             }

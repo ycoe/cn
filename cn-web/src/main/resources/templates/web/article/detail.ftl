@@ -22,7 +22,6 @@
     <div class="main_content">
         <h1>${article.title}</h1>
         <div class="news-info">
-            ${article.updateTime?number_to_date?string("yyyy年M月d日")}
             <#if article.parentIds??>
                 <#list article.parentIds as cateId>
                     <a href="/article/list-${cateId}.html">${cateId?string?cate_name("")}</a>

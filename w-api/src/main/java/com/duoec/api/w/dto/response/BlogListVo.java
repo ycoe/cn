@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author xuwenzhen
  */
-public class BlogListVo extends BasePaginationResponse<Blog> {
+public class BlogListVo<T extends Blog> extends BasePaginationResponse<T> {
     /**
      * 相关的用户列表
      */
